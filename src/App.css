@@ -5,15 +5,9 @@
   font-family: "Poppins", sans-serif;
 }
 
-body {
-  background-color: #f5f6fa;
-  color: #333;
-}
 
-.container {
-  display: flex;
-  height: 100vh;
-}
+
+
 
 /* Sidebar */
 .sidebar {
