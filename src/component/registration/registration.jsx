@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import "./registration.css";
 
@@ -19,17 +20,38 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("❌ Passwords do not match!");
-      return;
-    }
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
 
-    console.log("Registration Data:", formData);
+  try {
+    const response = await axios.post("http://localhost:5000/api/register", {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      phone: formData.phone,
+      address: formData.address,
+    });
+
+ 
     alert("✅ Registration successful!");
-  };
+    console.log("User registered:", response.data);
+
+    localStorage.setItem("token", response.data.token);
+
+  } catch (error) {
+    if (error.response) {
+      alert(` ${error.response.data.message}`);
+    } else {
+      alert(" Server error. Please try again later.");
+    }
+    console.error("Error:", error);
+  }
+};
 
   return (
     <div className={`main-container ${darkMode ? "dark" : "light"}`}>
