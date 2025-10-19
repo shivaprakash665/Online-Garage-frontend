@@ -3,13 +3,16 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Dashboard from './component/dashboard'
+import Register from './component/registration/registration'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>Welcome to Garage</h1> 
+     <div>
+      <Register />
+    </div>
     </>
   )
 }
