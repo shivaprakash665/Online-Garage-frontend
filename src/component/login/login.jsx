@@ -1,60 +1,103 @@
-function Login() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Sign in to your account</h1>
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./login.css";
 
-        <form className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate(); // For redirect after login
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    // Debug: check values before sending
+    console.log("Submitting login:", { email, password });
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/login",
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      setSuccess(response.data.message);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      console.log("Logged in user:", response.data.user);
+
+      // Redirect after 1 second
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } catch (err) {
+      if (err.response && err.response.data) {
+        setError(err.response.data.message);
+      } else {
+        setError("Something went wrong. Try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container">
+      <div className="login-box">
+        <h1>Sign in to your account</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               id="email"
-              name="email"
               type="email"
               placeholder="you@example.com"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <div className="relative mt-1">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="Enter your password"
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 pr-10"
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
 
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
+          <div className="actions">
+            <button type="button" className="link-btn">
               Not registered? Create account
             </button>
-
-            <button
-              type="button"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
+            <button type="button" className="link-btn">
               Forgot password?
             </button>
           </div>
 
+          {error && <p className="error">{error}</p>}
+          {success && <p className="success">{success}</p>}
+
           <div>
-            <button
-              type="submit"
-              className="w-full inline-flex justify-center items-center rounded-md bg-indigo-600 px-4 py-2 text-white font-medium hover:bg-indigo-700"
-            >
-              Sign in
+            <button type="submit" className="submit-btn" disabled={loading}>
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </div>
         </form>
