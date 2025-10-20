@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Dashboard from './component/dashboard'
 import Register from './component/registration/registration'
+import Login from './component/login/login'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,7 +12,7 @@ function App() {
   return (
     <>
      <div>
-      <Register />
+      <Login />
     </div>
     </>
   )
