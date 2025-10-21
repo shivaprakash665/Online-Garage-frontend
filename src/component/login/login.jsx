@@ -4,22 +4,22 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 
 function Login() {
+  const [darkMode, setDarkMode] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // For redirect after login
+  const navigate = useNavigate();
+
+  const toggleTheme = () => setDarkMode(!darkMode);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     setLoading(true);
-
-    // Debug: check values before sending
-    console.log("Submitting login:", { email, password });
 
     if (!email || !password) {
       setError("Email and password are required");
@@ -34,35 +34,53 @@ function Login() {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      setSuccess(response.data.message);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      const { message, token, user } = response.data;
 
-      console.log("Logged in user:", response.data.user);
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
-      // Redirect after 1 second
-      setTimeout(() => navigate("/dashboard"), 1000);
+      setSuccess(message);
+
+      const role = user.role?.toLowerCase();
+      if (role === "admin") navigate("/admin-dashboard");
+      else if (role === "agent") navigate("/agent-dashboard");
+      else if (role === "user") navigate("/user-dashboard");
+      else setError("Invalid role. Please contact admin.");
     } catch (err) {
-      if (err.response && err.response.data) {
-        setError(err.response.data.message);
-      } else {
-        setError("Something went wrong. Try again.");
-      }
+      if (err.response && err.response.data) setError(err.response.data.message);
+      else setError("Something went wrong. Try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container">
+    <div className={`container ${darkMode ? "dark" : "light"}`}>
+      <button
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          borderRadius: "50%",
+          padding: "6px 8px",
+          cursor: "pointer",
+          fontSize: "20px",
+          border: "2px solid currentColor",
+          background: "transparent",
+          zIndex: 10,
+        }}
+        onClick={toggleTheme}
+      >
+        {darkMode ? "🌞" : "🌙"}
+      </button>
+
       <div className="login-box">
         <h1>Sign in to your account</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label>Email</label>
             <input
-              id="email"
               type="email"
               placeholder="you@example.com"
               value={email}
@@ -72,9 +90,8 @@ function Login() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label>Password</label>
             <input
-              id="password"
               type="password"
               placeholder="Enter your password"
               value={password}
@@ -84,7 +101,11 @@ function Login() {
           </div>
 
           <div className="actions">
-            <button type="button" className="link-btn">
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => navigate("/register")}
+            >
               Not registered? Create account
             </button>
             <button type="button" className="link-btn">
@@ -95,11 +116,9 @@ function Login() {
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
 
-          <div>
-            <button type="submit" className="submit-btn" disabled={loading}>
-              {loading ? "Signing in..." : "Sign in"}
-            </button>
-          </div>
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? "Signing in..." : "Sign in"}
+          </button>
         </form>
       </div>
     </div>

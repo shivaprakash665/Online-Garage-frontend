@@ -1,21 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Dashboard from './component/dashboard'
-import Register from './component/registration/registration'
-import Login from './component/login/login'
+import { Routes, Route } from "react-router-dom";
+import Login from "./component/login/login";
+import Register from "./component/registration/registration";
+import AdminDashboard from "./component/dashboard/admin";
+import UserDashboard from "./component/dashboard/user";
+import AgentDashboard from "./component/dashboard/agent";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-     <div>
-      <Login />
-    </div>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      <Route path="/user-dashboard" element={<UserDashboard />} />
+      <Route path="/agent-dashboard" element={<AgentDashboard />} />
+
+
+      
+    </Routes>
+  );
 }
 
-export default App
+export default App;

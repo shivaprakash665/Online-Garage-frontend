@@ -1,8 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./registration.css";
 
 const Register = () => {
+  const navigate = useNavigate(); // hook for navigation
   const [darkMode, setDarkMode] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
@@ -16,53 +18,36 @@ const Register = () => {
 
   const toggleTheme = () => setDarkMode(!darkMode);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (formData.password !== formData.confirmPassword) {
-    alert("Passwords do not match!");
-    return;
-  }
-
-  try {
-    const response = await axios.post("http://localhost:3000/api/register", {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      phone: formData.phone,
-      address: formData.address,
-    });
-
- 
-    alert("✅ Registration successful!");
-    console.log("User registered:", response.data);
-
-    localStorage.setItem("token", response.data.token);
-
-  } catch (error) {
-    if (error.response) {
-      alert(` ${error.response.data.message}`);
-    } else {
-      alert(" Server error. Please try again later.");
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
     }
-    console.error("Error:", error);
-  }
-};
+
+    try {
+      const res = await axios.post("http://localhost:3000/api/register", {
+        ...formData,
+      });
+      alert("✅ Registration successful!");
+      localStorage.setItem("token", res.data.token);
+      navigate("/"); // Redirect to login after successful registration
+    } catch (err) {
+      alert(err.response?.data?.message || "Server error");
+    }
+  };
 
   return (
     <div className={`main-container ${darkMode ? "dark" : "light"}`}>
-      {/* Theme Toggle Button */}
       <button className="theme-toggle" onClick={toggleTheme}>
         {darkMode ? "🌞" : "🌙"}
       </button>
 
       <div className="register-card">
         <h2>Create Account</h2>
-        <p className="subtitle">Join our community — it's quick and easy!</p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -73,7 +58,6 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="email"
             name="email"
@@ -82,7 +66,6 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="tel"
             name="phone"
@@ -91,7 +74,6 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="text"
             name="address"
@@ -100,7 +82,6 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="password"
             name="password"
@@ -109,7 +90,6 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="password"
             name="confirmPassword"
@@ -119,7 +99,6 @@ const Register = () => {
             required
           />
 
-          {/* Elegant Dropdown */}
           <div className="custom-select-wrapper">
             <select
               name="role"
@@ -138,9 +117,22 @@ const Register = () => {
           </button>
         </form>
 
-        <p className="login-text">
-          Already have an account? <a href="#">Login</a>
-        </p>
+        {/* Button to go to login page */}
+        <button
+          className="login-btn"
+          onClick={() => navigate("/")}
+          style={{
+            marginTop: "12px",
+            background: "transparent",
+            border: "none",
+            color: "#007bff",
+            cursor: "pointer",
+            textDecoration: "underline",
+            fontSize: "14px",
+          }}
+        >
+          Already have an account? Login
+        </button>
       </div>
     </div>
   );
