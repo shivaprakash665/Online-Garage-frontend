@@ -1,15 +1,16 @@
 /* --------------------------
-   MAIN CONTAINER
+   FULL-PAGE CONTAINER
 --------------------------- */
 .main-container {
+  width: 100vw;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Poppins", sans-serif;
-  transition: all 0.4s ease;
   position: relative;
-  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  overflow-y: auto;
+  transition: background 0.5s ease, color 0.5s ease;
 }
 
 .light {
@@ -18,22 +19,8 @@
 }
 
 .dark {
-  background: radial-gradient(circle at top, #0a0a10, #141422, #1d1d2f);
+  background: linear-gradient(135deg, #0a0a10, #1d1d2f);
   color: #f5f5f5;
-}
-
-/* Subtle background animation */
-.main-container::before {
-  content: "";
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(0, 123, 255, 0.2), transparent);
-  top: -100px;
-  right: -100px;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: 0;
 }
 
 /* --------------------------
@@ -42,24 +29,21 @@
 .register-card {
   position: relative;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 18px;
-  padding: 2.5rem 2rem;
-  width: 380px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 2rem 1.8rem;
+  width: 90%;
+  max-width: 420px;
   text-align: center;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.8s ease;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.light .register-card {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
 .dark .register-card {
-  background: rgba(30, 30, 45, 0.6);
+  background: rgba(30, 30, 45, 0.85);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* --------------------------
@@ -68,12 +52,11 @@
 .register-card h2 {
   font-weight: 600;
   margin-bottom: 0.4rem;
-  letter-spacing: 0.5px;
 }
 
 .subtitle {
   font-size: 14px;
-  opacity: 0.8;
+  opacity: 0.7;
   margin-bottom: 1.5rem;
 }
 
@@ -83,40 +66,43 @@
 form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 input,
 select {
-  padding: 10px 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
   border: none;
-  border-radius: 10px;
   font-size: 14px;
   outline: none;
   transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Inputs */
-.light input {
+.light input,
+.light select {
   background: #fff;
-  color: #000;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  color: #222;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.dark input {
+.dark input,
+.dark select {
   background: #2a2a3d;
   color: #fff;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
 }
 
-/* Focus animation */
-input:focus {
+input:focus,
+select:focus {
   border: 1px solid #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
 /* --------------------------
-   ELEGANT DROPDOWN
+   CUSTOM DROPDOWN
 --------------------------- */
 .custom-select-wrapper {
   position: relative;
@@ -124,47 +110,24 @@ input:focus {
 
 .custom-select {
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   width: 100%;
-  padding: 10px 14px;
-  border-radius: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
   font-size: 14px;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: 0.3s;
-  background: linear-gradient(145deg, #2a2a3d, #1c1c2b);
-  color: #fff;
+  transition: all 0.3s ease;
 }
 
-/* Ensure dropdown options are visible in dark mode */
-.dark .custom-select option {
-  background: #2a2a3d;
-  color: #fff;
-}
-
-.light .custom-select {
-  background: linear-gradient(145deg, #ffffff, #f3f3f3);
-  color: #222;
-  border: 1px solid #ccc;
-}
-
-/* Dropdown arrow */
 .custom-select-wrapper::after {
   content: "▾";
   position: absolute;
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none;
   font-size: 16px;
-  opacity: 0.7;
-}
-
-.custom-select:hover {
-  transform: scale(1.02);
-  border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 /* --------------------------
@@ -173,34 +136,33 @@ input:focus {
 .register-btn {
   background: linear-gradient(135deg, #007bff, #0056b3);
   color: #fff;
-  padding: 12px;
+  padding: 14px;
   border: none;
-  border-radius: 10px;
-  cursor: pointer;
+  border-radius: 12px;
   font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 0.5rem;
-  letter-spacing: 0.5px;
+  margin-top: 6px;
 }
 
 .register-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
   background: linear-gradient(135deg, #0056b3, #003c80);
-  box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
 }
 
 /* --------------------------
    LOGIN TEXT
 --------------------------- */
 .login-text {
-  margin-top: 18px;
+  margin-top: 14px;
   font-size: 14px;
 }
 
 .login-text a {
   color: #007bff;
-  text-decoration: none;
   font-weight: 500;
+  text-decoration: none;
 }
 
 .login-text a:hover {
@@ -208,12 +170,12 @@ input:focus {
 }
 
 /* --------------------------
-   THEME TOGGLE BUTTON
+   THEME TOGGLE
 --------------------------- */
 .theme-toggle {
   position: absolute;
   top: 20px;
-  right: 24px;
+  right: 20px;
   background: transparent;
   border: 2px solid currentColor;
   border-radius: 50%;
@@ -225,19 +187,23 @@ input:focus {
 }
 
 .theme-toggle:hover {
-  transform: rotate(25deg);
+  transform: rotate(20deg);
 }
 
 /* --------------------------
    ANIMATION
 --------------------------- */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* --------------------------
+   RESPONSIVE
+--------------------------- */
+@media (max-width: 600px) {
+  .register-card {
+    width: 95%;
+    padding: 1.8rem 1rem;
   }
 }
