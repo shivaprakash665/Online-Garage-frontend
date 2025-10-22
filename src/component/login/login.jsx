@@ -43,7 +43,7 @@ function Login() {
 
       const role = user.role?.toLowerCase();
       if (role === "admin") navigate("/admin-dashboard");
-      else if (role === "agent") navigate("/agent-dashboard");
+      else if (role === "insurance agent") navigate("/agent-dashboard");
       else if (role === "user") navigate("/user-dashboard");
       else setError("Invalid role. Please contact admin.");
     } catch (err) {
