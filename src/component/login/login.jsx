@@ -29,7 +29,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4500/api/login",
+        "https://online-garage-api-2.onrender.com/api/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
