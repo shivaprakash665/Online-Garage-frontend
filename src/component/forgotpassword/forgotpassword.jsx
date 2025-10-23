@@ -9,7 +9,7 @@ function ForgotPassword() {
   const [step, setStep] = useState(1);
   const [message, setMessage] = useState("");
 
-  const API_BASE = "https://online-garage-api-2.onrender.com/api"; // backend URL
+  const API_BASE = "http://localhost:4500/api"; // backend URL
 
   // Step 1: Send OTP
   const handleSendOtp = async (e) => {
