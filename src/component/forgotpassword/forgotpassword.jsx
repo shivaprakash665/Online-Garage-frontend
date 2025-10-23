@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./forgotpassword.css";
 
 function ForgotPassword() {
@@ -8,36 +9,48 @@ function ForgotPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [step, setStep] = useState(1);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const API_BASE = "http://localhost:4500/api"; // backend URL
 
   // Step 1: Send OTP
   const handleSendOtp = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage("Sending OTP...");
     try {
       const res = await axios.post(`${API_BASE}/forgot-password`, { email });
       setMessage(res.data.message);
       setStep(2);
     } catch (err) {
       setMessage(err.response?.data?.message || "Error sending OTP");
+    } finally {
+      setLoading(false);
     }
   };
 
   // Step 2: Verify OTP
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage("Verifying OTP...");
     try {
       const res = await axios.post(`${API_BASE}/verify-otp`, { email, otp });
       setMessage(res.data.message);
       setStep(3);
     } catch (err) {
       setMessage(err.response?.data?.message || "Invalid OTP");
+    } finally {
+      setLoading(false);
     }
   };
 
   // Step 3: Reset Password
   const handleResetPassword = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage("Resetting password...");
     try {
       const res = await axios.post(`${API_BASE}/reset-password`, {
         email,
@@ -48,6 +61,8 @@ function ForgotPassword() {
       setStep(4);
     } catch (err) {
       setMessage(err.response?.data?.message || "Error resetting password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,8 +81,11 @@ function ForgotPassword() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
-            <button type="submit">Send OTP</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Sending OTP..." : "Send OTP"}
+            </button>
           </form>
         )}
 
@@ -80,8 +98,11 @@ function ForgotPassword() {
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               required
+              disabled={loading}
             />
-            <button type="submit">Verify OTP</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Verifying..." : "Verify OTP"}
+            </button>
           </form>
         )}
 
@@ -94,15 +115,18 @@ function ForgotPassword() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
+              disabled={loading}
             />
-            <button type="submit">Reset Password</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Resetting..." : "Reset Password"}
+            </button>
           </form>
         )}
 
         {step === 4 && (
           <div className="success">
             <p>Password reset successful 🎉</p>
-            <a href="/login">Back to Login</a>
+            <button onClick={() => navigate("/")}>Back to Login</button>
           </div>
         )}
       </div>

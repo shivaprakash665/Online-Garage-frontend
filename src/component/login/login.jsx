@@ -101,17 +101,22 @@ function Login() {
           </div>
 
           <div className="actions">
-            <button
-              type="button"
-              className="link-btn"
-              onClick={() => navigate("/register")}
-            >
-              Not registered? Create account
-            </button>
-            <button type="button" className="link-btn">
-              Forgot password?
-            </button>
-          </div>
+  <button
+    type="button"
+    className="link-btn"
+    onClick={() => navigate("/register")}
+  >
+    Not registered? Create account
+  </button>
+  <button
+    type="button"
+    className="link-btn"
+    onClick={() => navigate("/forgot-password")}
+  >
+    Forgot password?
+  </button>
+</div>
+
 
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
