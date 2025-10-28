@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE ='https://online-garage-api-2.onrender.com/api/vehicles';
+const API_BASE ='http://localhost:4500/api/vehicles';
 
 export const getFuelTypes = async () => {
   const res = await axios.get(`${API_BASE}/fueltypes`);

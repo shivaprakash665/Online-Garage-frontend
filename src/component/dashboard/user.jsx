@@ -23,7 +23,9 @@ export default function UserDashboard({ authUser }) {
 
   const fetchVehicles = async () => {
     try {
+      console.log("fetching data")
       const data = await getVehiclesByUser(userId);
+      console.log("data from API ",data)
       setVehicles(data);
     } catch (err) {
       console.error(err);
