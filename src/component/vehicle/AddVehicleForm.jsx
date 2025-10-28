@@ -21,7 +21,7 @@ export default function AddVehicleForm({ onAdded }) {
     const fetchFuelTypes = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE || "https://online-garage-api-2.onrender.com/api/vehicles/fueltypes"}`
+          `${import.meta.env.VITE_API_BASE || "http://localhost:4500/api/vehicles/fueltypes"}`
         );
         setFuelTypes(res.data || []);
       } catch (err) {
@@ -50,7 +50,7 @@ export default function AddVehicleForm({ onAdded }) {
       for (let key in form) formData.append(key, form[key]);
 
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE || "https://online-garage-api-2.onrender.com/api/vehicles/add"}`,
+        `${import.meta.env.VITE_API_BASE || "http://localhost:4500/api/vehicles/add"}`,
         formData,
         {
           headers: {

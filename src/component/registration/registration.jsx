@@ -29,7 +29,7 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post("https://online-garage-api-2.onrender.com/api/register", {
+      const res = await axios.post("http://localhost:4500/api/register", {
         ...formData,
       });
       alert("✅ Registration successful!");
