@@ -1,3 +1,8 @@
+
+
+
+
+
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -5,6 +10,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./user.css";
 import AddVehicleForm from "../vehicle/AddVehicleForm";
 import { getVehiclesByUser } from "../../services/vehicleService";
+import VehicleList from "../vehicle/vehicleList";
 
 export default function UserDashboard({ authUser }) {
   const userId = authUser?.id || authUser?._id || "demoUserId";
@@ -99,6 +105,7 @@ export default function UserDashboard({ authUser }) {
 
         {/* Page Content */}
         <div className="content p-4">
+          {/* Dashboard Section */}
           {selected === "dashboard" && (
             <>
               <div className="row g-4 mb-4">
@@ -152,7 +159,10 @@ export default function UserDashboard({ authUser }) {
                     <div className="card h-100 shadow-sm border-0">
                       {v.imagePath ? (
                         <img
-                          src={`${import.meta.env.VITE_API_BASE?.replace?.("/api/vehicles", "") || "https://online-garage-api-2.onrender.com"}${v.imagePath}`}
+                          src={`${
+                            import.meta.env.VITE_API_BASE?.replace?.("/api/vehicles", "") ||
+                            "https://online-garage-api-2.onrender.com"
+                          }${v.imagePath}`}
                           className="card-img-top"
                           alt="vehicle"
                           style={{ height: 150, objectFit: "cover" }}
@@ -176,10 +186,15 @@ export default function UserDashboard({ authUser }) {
             </>
           )}
 
+          {/* Vehicle List Section */}
+          {selected === "vehicleList" && <VehicleList vehicles={vehicles} />}
+
+          {/* Add Vehicle Section */}
           {selected === "addVehicle" && (
             <AddVehicleForm userId={userId} onAdded={onAdded} />
           )}
 
+          {/* Reminders (Coming Soon) */}
           {["serviceReminder", "renewals", "challanReminder"].includes(selected) && (
             <div className="card p-4 shadow-sm">
               <h5 className="text-capitalize">{selected.replace(/([A-Z])/g, " $1")}</h5>
@@ -191,3 +206,8 @@ export default function UserDashboard({ authUser }) {
     </div>
   );
 }
+
+
+
+
+
