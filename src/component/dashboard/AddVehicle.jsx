@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 
+
 function AddVehicle() {
   const [formData, setFormData] = useState({
     registrationNumber: "",
