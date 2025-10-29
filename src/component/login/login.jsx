@@ -29,7 +29,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://online-garage-api-2.onrender.com/api/login",
+        "http://localhost:5000/api/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -44,7 +44,7 @@ function Login() {
       const role = user.role?.toLowerCase();
       if (role === "admin") navigate("/admin-dashboard");
       else if (role === "insurance agent") navigate("/agent-dashboard");
-      else if (role === "user") navigate("/user-dashboard");
+      else if (role === "user") navigate("/userdashboard");
       else setError("Invalid role. Please contact admin.");
     } catch (err) {
       if (err.response && err.response.data) setError(err.response.data.message);
