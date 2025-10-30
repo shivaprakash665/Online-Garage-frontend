@@ -1,0 +1,229 @@
+/* component/dashboard/DashboardTiles.css */
+.dashboard-tiles-container {
+  padding: 20px 0;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+}
+
+.dashboard-header h4 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.dashboard-header p {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.tile-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 100%;
+}
+
+.tile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.tile-card.total-vehicles {
+  border-left: 4px solid #007bff;
+}
+
+.tile-card.challan-reminders {
+  border-left: 4px solid #28a745;
+}
+
+.tile-card.service-reminders {
+  border-left: 4px solid #ffc107;
+}
+
+.tile-card.insurance-reminders {
+  border-left: 4px solid #17a2b8;
+}
+
+.tile-content {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.tile-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.total-vehicles .tile-icon {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+}
+
+.challan-reminders .tile-icon {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+  color: white;
+}
+
+.service-reminders .tile-icon {
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+  color: white;
+}
+
+.insurance-reminders .tile-icon {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+}
+
+.tile-info h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.tile-info p {
+  color: #6c757d;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.reminder-vehicles-section {
+  margin-top: 40px;
+}
+
+.section-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.no-reminders-card {
+  border: 2px dashed #dee2e6;
+  border-radius: 15px;
+  background: #f8f9fa;
+}
+
+.reminder-vehicle-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid #ffc107;
+}
+
+.reminder-vehicle-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.reminder-vehicle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.vehicle-registration {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.reminder-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.reminder-type-badge {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.reminder-dates {
+  margin-top: 15px;
+}
+
+.date-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.date-item:last-child {
+  border-bottom: none;
+}
+
+.date-item small {
+  font-size: 0.8rem;
+}
+
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .tile-info h3 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-tiles-container {
+    padding: 10px 0;
+  }
+  
+  .tile-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .tile-icon {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  
+  .reminder-vehicle-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .reminder-badges {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .tile-info h3 {
+    font-size: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.1rem;
+  }
+}

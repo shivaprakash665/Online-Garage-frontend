@@ -1,0 +1,96 @@
+/* component/dashboard/AddVehicle.css */
+.add-vehicle-container {
+  padding: 20px 0;
+}
+
+.add-vehicle-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.add-vehicle-header {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 20px 30px;
+  border-bottom: none;
+}
+
+.add-vehicle-header h4 {
+  font-weight: 600;
+}
+
+.form-control-custom {
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+}
+
+.form-control-custom:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.alert {
+  border-radius: 10px;
+  border: none;
+}
+
+.alert-danger {
+  background-color: #fee;
+  color: #d63031;
+}
+
+.alert-success {
+  background-color: #e8f6ef;
+  color: #00b894;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.btn-outline-secondary {
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-weight: 500;
+}
+
+hr {
+  border-top: 2px solid #e9ecef;
+  opacity: 0.5;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+.text-danger {
+  color: #e74c3c !important;
+}
+
+.card {
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
