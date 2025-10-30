@@ -1,0 +1,120 @@
+/* component/dashboard/DeleteConfirmationModal.css */
+.delete-confirmation-modal .modal-content {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(220, 53, 69, 0.2);
+  overflow: hidden;
+}
+
+.delete-modal-header {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  border-bottom: none;
+  padding: 20px 30px;
+  border-radius: 20px 20px 0 0;
+}
+
+.delete-modal-header .btn-close {
+  filter: invert(1);
+  opacity: 0.8;
+}
+
+.delete-modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+.delete-modal-header .modal-title {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.delete-modal-body {
+  padding: 40px 30px 30px;
+  text-align: center;
+}
+
+.warning-icon {
+  margin-bottom: 20px;
+}
+
+.warning-icon svg {
+  opacity: 0.8;
+}
+
+.vehicle-details-alert {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 10px;
+  color: #856404;
+  text-align: left;
+  margin: 20px 0;
+  padding: 15px;
+}
+
+.warning-message {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  border-left: 4px solid #ffc107;
+}
+
+.delete-modal-footer {
+  border-top: 1px solid #e9ecef;
+  padding: 20px 30px;
+  gap: 10px;
+}
+
+.cancel-btn, .confirm-btn {
+  border-radius: 10px;
+  padding: 10px 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.cancel-btn {
+  border: 1px solid #6c757d;
+  color: #6c757d;
+}
+
+.cancel-btn:hover {
+  background: #6c757d;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .delete-modal-body {
+    padding: 30px 20px 20px;
+  }
+  
+  .delete-modal-footer {
+    padding: 15px 20px;
+    flex-direction: column;
+  }
+  
+  .cancel-btn, .confirm-btn {
+    width: 100%;
+  }
+}

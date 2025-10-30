@@ -3,9 +3,13 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Navbar, Nav, NavDropdown, Button, Modal, Form } from "react-bootstrap";
 import Sidebar from "./sidebar";
 import DashboardTiles from "./DashboardTiles";
-import AddVehicle from "./AddVehicle"; // Ensure this is imported
-import VehicleList from "./VehicleList"; // Ensure this is imported
+import AddVehicle from "./AddVehicle";
+import VehicleList from "./VehicleList"; 
+import ServiceReminders from "./ServiceReminders";
+import VehicleRenewal from "./VehicleRenewal";
+import InsuranceReminders from "./InsuranceReminders";
 import axios from "axios";
+
 
 function UserDashboard() {
   const [user, setUser] = useState(null);
@@ -66,6 +70,9 @@ function UserDashboard() {
             <Route path="/" element={<DashboardTiles />} />
             <Route path="/addvehicle" element={<AddVehicle />} />
             <Route path="/vehiclelist" element={<VehicleList />} />
+            <Route path="/service-reminders" element={<ServiceReminders />} />
+            <Route path="/renewal-reminders" element={<VehicleRenewal />} />
+            <Route path="/insurance-reminders" element={<InsuranceReminders />} />
           </Routes>
         </Col>
       </Row>

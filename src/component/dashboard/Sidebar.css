@@ -1,0 +1,225 @@
+/* component/dashboard/Sidebar.css */
+.sidebar-container {
+  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+  min-height: 100vh;
+  padding: 20px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-nav {
+  padding: 0 15px;
+}
+
+.sidebar-link {
+  color: #bdc3c7 !important;
+  padding: 12px 15px !important;
+  border-radius: 10px !important;
+  margin-bottom: 5px !important;
+  transition: all 0.3s ease;
+  display: flex !important;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+  color: white !important;
+  transform: translateX(5px);
+}
+
+.sidebar-icon {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.sidebar-dropdown .dropdown-toggle {
+  background: transparent !important;
+  border: none !important;
+  color: #bdc3c7 !important;
+  padding: 12px 15px !important;
+  border-radius: 10px !important;
+  margin-bottom: 5px !important;
+  transition: all 0.3s ease;
+  display: flex !important;
+  align-items: center;
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.sidebar-dropdown .dropdown-toggle:hover, 
+.sidebar-dropdown.show .dropdown-toggle {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+  color: white !important;
+  transform: translateX(5px);
+}
+
+.sidebar-dropdown .dropdown-toggle::after {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-dropdown.show .dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.sidebar-dropdown .dropdown-menu {
+  background: #34495e;
+  border: none;
+  border-radius: 10px;
+  margin-top: 5px !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 8px 0;
+  border-left: 3px solid #3498db;
+}
+
+.dropdown-item {
+  color: #bdc3c7 !important;
+  padding: 10px 20px !important;
+  display: flex !important;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.dropdown-item:hover {
+  background: #3d566e !important;
+  color: white !important;
+  transform: translateX(5px);
+}
+
+.dropdown-item.text-danger:hover {
+  background: #e74c3c !important;
+  color: white !important;
+}
+
+.sidebar-badge {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  margin-left: auto;
+  border-radius: 10px;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Color variations for different badge types */
+.sidebar-badge.bg-warning {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
+}
+
+.sidebar-badge.bg-primary {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+}
+
+.sidebar-badge.bg-success {
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%) !important;
+}
+
+.sidebar-badge.bg-info {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+}
+
+.sidebar-badge.bg-danger {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+}
+
+/* Dropdown item badges */
+.dropdown-item .badge {
+  font-size: 0.65rem;
+  padding: 3px 6px;
+  min-width: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar-container {
+    min-height: auto;
+    padding: 10px 0;
+    position: relative;
+  }
+  
+  .sidebar-nav {
+    padding: 0 10px;
+  }
+  
+  .sidebar-link, .sidebar-dropdown .dropdown-toggle {
+    padding: 10px 12px !important;
+    font-size: 0.9rem;
+  }
+  
+  .sidebar-icon {
+    margin-right: 8px;
+    width: 16px;
+    font-size: 1rem;
+  }
+  
+  .sidebar-badge {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+    min-width: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar-container {
+    padding: 5px 0;
+  }
+  
+  .sidebar-link, .sidebar-dropdown .dropdown-toggle {
+    padding: 8px 10px !important;
+    font-size: 0.85rem;
+  }
+  
+  .sidebar-icon {
+    margin-right: 6px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animation for badge pulses */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.sidebar-badge {
+  animation: pulse 2s infinite;
+}
+
+.sidebar-badge:not([class*="bg-warning"]):not([class*="bg-danger"]) {
+  animation: none;
+}
+
+/* Scrollbar for sidebar */
+.sidebar-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: #2c3e50;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: #3498db;
+  border-radius: 10px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: #2980b9;
+}

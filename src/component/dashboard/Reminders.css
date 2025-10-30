@@ -1,0 +1,127 @@
+/* component/dashboard/Reminders.css */
+.reminders-container {
+  padding: 20px 0;
+}
+
+.reminders-header {
+  margin-bottom: 30px;
+}
+
+.reminders-header h4 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.reminders-summary {
+  margin-bottom: 30px;
+}
+
+.summary-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.summary-item h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.reminder-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.reminder-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.service-reminder {
+  border-left: 4px solid #28a745;
+}
+
+.renewal-reminder {
+  border-left: 4px solid #007bff;
+}
+
+.insurance-reminder {
+  border-left: 4px solid #17a2b8;
+}
+
+.reminder-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.vehicle-registration {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.vehicle-make-model {
+  font-size: 0.9rem;
+}
+
+.reminder-details {
+  margin-bottom: 15px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row i {
+  width: 20px;
+  text-align: center;
+}
+
+.reminder-actions {
+  padding-top: 15px;
+  border-top: 1px solid #e9ecef;
+}
+
+.no-reminders-card {
+  border: 2px dashed #dee2e6;
+  border-radius: 15px;
+  background: #f8f9fa;
+}
+
+.reminders-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .reminder-card-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .summary-item h3 {
+    font-size: 2rem;
+  }
+  
+  .reminders-container {
+    padding: 10px 0;
+  }
+}
