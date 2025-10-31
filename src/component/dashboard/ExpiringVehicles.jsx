@@ -24,7 +24,7 @@ function ExpiringVehicles({ showAlert }) {
 
   const fetchExpiringVehicles = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/insurance/agent/expiring-vehicles", {
+      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/expiring-vehicles", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setExpiringVehicles(response.data);
@@ -49,7 +49,7 @@ function ExpiringVehicles({ showAlert }) {
 
   const handleSubmitRequest = async () => {
     try {
-      await axios.post("http://localhost:5000/api/insurance/agent/send-request", 
+      await axios.post("https://online-garage-api-2.onrender.com/api/insurance/agent/send-request", 
         {
           vehicleId: selectedVehicle._id,
           ...requestData

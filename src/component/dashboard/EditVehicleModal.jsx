@@ -49,7 +49,7 @@ function EditVehicleModal({ show, onHide, vehicle, onVehicleUpdate }) {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/vehicles/${vehicle._id}`,
+        `https://online-garage-api-2.onrender.com/api/vehicles/${vehicle._id}`,
         data,
         {
           headers: {
@@ -73,7 +73,7 @@ function EditVehicleModal({ show, onHide, vehicle, onVehicleUpdate }) {
     if (newDate) {
       try {
         const response = await axios.put(
-          `http://localhost:5000/api/vehicles/renewal/${vehicle._id}`,
+          `https://online-garage-api-2.onrender.com/api/vehicles/renewal/${vehicle._id}`,
           { type, newDate },
           {
             headers: {
@@ -308,7 +308,7 @@ function EditVehicleModal({ show, onHide, vehicle, onVehicleUpdate }) {
               <Form.Label>Current Image</Form.Label>
               <div className="current-image-container">
                 <img 
-                  src={`http://localhost:5000/${vehicle.image}`} 
+                  src={`https://online-garage-api-2.onrender.com/${vehicle.image}`} 
                   alt="Current vehicle"
                   className="current-image"
                 />

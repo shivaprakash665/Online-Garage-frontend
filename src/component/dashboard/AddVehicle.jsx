@@ -72,7 +72,7 @@ function AddVehicle() {
     });
 
     try {
-      const response = await axios.post("http://localhost:5000/api/vehicles/add", data, {
+      const response = await axios.post("https://online-garage-api-2.onrender.com/api/vehicles/add", data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",

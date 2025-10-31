@@ -22,10 +22,10 @@ function DashboardTiles() {
     try {
       setLoading(true);
       const [countsRes, remindersRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/vehicles/counts", {
+        axios.get("https://online-garage-api-2.onrender.com/api/vehicles/counts", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }),
-        axios.get("http://localhost:5000/api/vehicles/reminders", {
+        axios.get("https://online-garage-api-2.onrender.com/api/vehicles/reminders", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
       ]);
