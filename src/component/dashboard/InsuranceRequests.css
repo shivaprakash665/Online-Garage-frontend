@@ -1,0 +1,158 @@
+/* src/component/dashboard/InsuranceRequests.css */
+.insurance-requests-container {
+  padding: 0;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h4 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.page-header p {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.insurance-request-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid #17a2b8;
+}
+
+.insurance-request-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.vehicle-registration {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+}
+
+.vehicle-details {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.agent-info {
+  margin-bottom: 15px;
+}
+
+.agent-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.request-date {
+  display: flex;
+  align-items: center;
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+.offer-details {
+  margin-bottom: 15px;
+}
+
+.offer-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 0.9rem;
+}
+
+.agent-message {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
+  border-left: 3px solid #17a2b8;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.request-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.accepted-info, .completed-info {
+  text-align: center;
+}
+
+.no-requests-card {
+  border: 2px dashed #dee2e6;
+  border-radius: 15px;
+  background: #f8f9fa;
+}
+
+.insurance-requests-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Details Modal */
+.detail-section {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.detail-section h6 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.message-text {
+  font-style: italic;
+  color: #6c757d;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .request-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .request-actions {
+    flex-direction: column;
+  }
+  
+  .request-actions .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}

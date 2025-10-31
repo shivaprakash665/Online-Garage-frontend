@@ -1,0 +1,208 @@
+/* src/component/dashboard/ExpiringVehicles.css */
+.expiring-vehicles-container {
+  padding: 0;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h4 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.page-header p {
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.urgency-section {
+  margin-bottom: 30px;
+}
+
+.urgency-title {
+  font-weight: 600;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid;
+}
+
+.urgency-title.text-danger {
+  border-bottom-color: #dc3545;
+}
+
+.urgency-title.text-warning {
+  border-bottom-color: #ffc107;
+}
+
+.urgency-title.text-info {
+  border-bottom-color: #17a2b8;
+}
+
+.urgency-title.text-primary {
+  border-bottom-color: #007bff;
+}
+
+.vehicle-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  border-left: 4px solid;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.vehicle-card.expired {
+  border-left-color: #dc3545;
+}
+
+.vehicle-card.urgent {
+  border-left-color: #ffc107;
+}
+
+.vehicle-card.soon {
+  border-left-color: #17a2b8;
+}
+
+.vehicle-card.upcoming {
+  border-left-color: #007bff;
+}
+
+.vehicle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.vehicle-registration {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+}
+
+.vehicle-details {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.vehicle-info {
+  margin-bottom: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #f8f9fa;
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item i {
+  width: 16px;
+  text-align: center;
+}
+
+.no-vehicles-card {
+  border: 2px dashed #dee2e6;
+  border-radius: 15px;
+  background: #f8f9fa;
+}
+
+.expiring-vehicles-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Modal Styles */
+.request-modal .modal-content {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header-custom {
+  background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+  color: white;
+  border-radius: 15px 15px 0 0;
+  border-bottom: none;
+  padding: 20px 25px;
+}
+
+.modal-header-custom .btn-close {
+  filter: invert(1);
+  opacity: 0.8;
+}
+
+.modal-header-custom .btn-close:hover {
+  opacity: 1;
+}
+
+.selected-vehicle-info {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  border-left: 4px solid #8B0000;
+}
+
+.selected-vehicle-info h6 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.form-control-custom {
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+}
+
+.form-control-custom:focus {
+  border-color: #8B0000;
+  box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.15);
+}
+
+.modal-footer-custom {
+  border-top: 1px solid #e9ecef;
+  padding: 20px 25px;
+  border-radius: 0 0 15px 15px;
+}
+
+.modal-footer-custom .btn {
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vehicle-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .page-header {
+    margin-bottom: 20px;
+  }
+  
+  .page-header h4 {
+    font-size: 1.3rem;
+  }
+}
