@@ -23,7 +23,7 @@ function SentRequests({ showAlert }) {
 
   const fetchSentRequests = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/insurance/agent/requests", {
+      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/requests", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setSentRequests(response.data);
@@ -49,7 +49,7 @@ function SentRequests({ showAlert }) {
 
   const handleSubmitUpdate = async () => {
     try {
-      await axios.put("http://localhost:5000/api/insurance/agent/update-insurance",
+      await axios.put("https://online-garage-api-2.onrender.com/api/insurance/agent/update-insurance",
         {
           requestId: selectedRequest._id,
           ...updateData

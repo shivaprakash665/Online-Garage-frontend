@@ -40,7 +40,7 @@ function VehicleList() {
   const fetchVehicles = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/vehicles", {
+      const res = await axios.get("https://online-garage-api-2.onrender.com/api/vehicles", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setVehicles(res.data);
@@ -64,7 +64,7 @@ function VehicleList() {
 
   const handleDeleteConfirm = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/vehicles/${vehicleToDelete._id}`, {
+      await axios.delete(`https://online-garage-api-2.onrender.com/api/vehicles/${vehicleToDelete._id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       
@@ -158,7 +158,7 @@ function VehicleList() {
                   <div className="vehicle-card-header">
                     {vehicle.image && (
                       <img 
-                        src={`http://localhost:5000/${vehicle.image}`} 
+                        src={`https://online-garage-api-2.onrender.com/${vehicle.image}`} 
                         alt={vehicle.registrationNumber}
                         className="vehicle-image"
                       />

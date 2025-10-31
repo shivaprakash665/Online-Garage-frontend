@@ -19,7 +19,7 @@ function InsuranceRequests() {
 
   const fetchInsuranceRequests = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/insurance/user-requests", {
+      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/user-requests", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setInsuranceRequests(response.data);
@@ -38,7 +38,7 @@ function InsuranceRequests() {
 
   const handleAcceptRequest = async (requestId) => {
     try {
-      await axios.put(`http://localhost:5000/api/insurance/accept-request/${requestId}`, {}, {
+      await axios.put(`https://online-garage-api-2.onrender.com/api/insurance/accept-request/${requestId}`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       
@@ -51,7 +51,7 @@ function InsuranceRequests() {
 
   const handleRejectRequest = async (requestId) => {
     try {
-      await axios.put(`http://localhost:5000/api/insurance/reject-request/${requestId}`, {}, {
+      await axios.put(`https://online-garage-api-2.onrender.com/api/insurance/reject-request/${requestId}`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       

@@ -22,10 +22,10 @@ function AgentSidebar() {
   const fetchSidebarData = async () => {
     try {
       const [statsRes, notificationsRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/insurance/agent/stats", {
+        axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/stats", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }),
-        axios.get("http://localhost:5000/api/insurance/agent/notifications", {
+        axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/notifications", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
       ]);

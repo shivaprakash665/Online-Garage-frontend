@@ -39,7 +39,7 @@ function UserDashboard() {
 
   const handleFeedbackSubmit = async () => {
     try {
-      await axios.post("http://localhost:5000/api/feedback", { message: feedback }, {
+      await axios.post("https://online-garage-api-2.onrender.com/api/feedback", { message: feedback }, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       alert("Feedback submitted!");

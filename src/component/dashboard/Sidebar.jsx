@@ -20,7 +20,7 @@ function Sidebar() {
 
   const fetchReminderCounts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/vehicles", {
+      const response = await axios.get("https://online-garage-api-2.onrender.com/api/vehicles", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       
@@ -60,7 +60,7 @@ function Sidebar() {
 
   const fetchInsuranceRequestsCount = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/insurance/user-requests", {
+      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/user-requests", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       

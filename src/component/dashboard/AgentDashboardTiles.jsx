@@ -21,7 +21,7 @@ function AgentDashboardTiles({ showAlert }) {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/insurance/agent/stats", {
+      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/stats", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setStats(response.data);
