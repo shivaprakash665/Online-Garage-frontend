@@ -34,21 +34,57 @@ function Login() {
         { headers: { "Content-Type": "application/json" } }
       );
 
+      console.log("Login Response:", response.data); // Debug log
+
       const { message, token, user } = response.data;
 
+      if (!token || !user) {
+        setError("Invalid response from server");
+        setLoading(false);
+        return;
+      }
+
+      // Store authentication data
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("role", user.role); // Store role separately
 
-      setSuccess(message);
+      setSuccess(message || "Login successful!");
 
-      const role = user.role?.toLowerCase();
-      if (role === "admin") navigate("/admin-dashboard");
-      else if (role === "insurance agent") navigate("/agent-dashboard");
-      else if (role === "user") navigate("/userdashboard");
-      else setError("Invalid role. Please contact admin.");
+      // Normalize role for comparison
+      const role = user.role?.toLowerCase().trim();
+      console.log("User Role:", role); // Debug log
+
+      // Navigate based on role
+      switch (role) {
+        case "admin":
+          navigate("/admindashboard");
+          break;
+        case "insurance agent":
+          navigate("/agentdashboard"); 
+          break;
+        case "user":
+          navigate("/userdashboard");
+          break;
+        default:
+          console.error("Unknown role:", role);
+          setError("Invalid user role. Please contact administrator.");
+          // Clear invalid auth data
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("role");
+      }
     } catch (err) {
-      if (err.response && err.response.data) setError(err.response.data.message);
-      else setError("Something went wrong. Try again.");
+      console.error("Login error:", err);
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || "Login failed");
+      } else {
+        setError("Network error. Please try again.");
+      }
+      // Clear any partial auth data on error
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("role");
     } finally {
       setLoading(false);
     }
@@ -101,22 +137,21 @@ function Login() {
           </div>
 
           <div className="actions">
-  <button
-    type="button"
-    className="link-btn"
-    onClick={() => navigate("/register")}
-  >
-    Not registered? Create account
-  </button>
-  <button
-    type="button"
-    className="link-btn"
-    onClick={() => navigate("/forgot-password")}
-  >
-    Forgot password?
-  </button>
-</div>
-
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => navigate("/register")}
+            >
+              Not registered? Create account
+            </button>
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => navigate("/forgot-password")}
+            >
+              Forgot password?
+            </button>
+          </div>
 
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
