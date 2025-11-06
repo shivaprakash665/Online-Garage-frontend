@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Form, Button, Alert, Row, Col, Card } from "react-bootstrap";
 import axios from "axios";
 import "./AddVehicle.css";
+import CONFIG from "../../../src/config";
 
 function AddVehicle() {
   const [formData, setFormData] = useState({
@@ -72,7 +73,7 @@ function AddVehicle() {
     });
 
     try {
-      const response = await axios.post("https://online-garage-api-2.onrender.com/api/vehicles/add", data, {
+      const response = await axios.post(`${CONFIG.API_BASE_URL}/api/vehicles/add`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",

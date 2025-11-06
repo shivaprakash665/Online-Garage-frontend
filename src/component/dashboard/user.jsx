@@ -11,6 +11,7 @@ import "./user.css";
 import AddVehicleForm from "../vehicle/AddVehicleForm";
 import { getVehiclesByUser } from "../../services/vehicleService";
 import VehicleList from "../vehicle/vehicleList";
+import CONFIG from "../../../src/config";
 
 export default function UserDashboard({ authUser }) {
   const userId = authUser?.id || authUser?._id || "demoUserId";
@@ -163,7 +164,7 @@ export default function UserDashboard({ authUser }) {
                         <img
                           src={`${
                             import.meta.env.VITE_API_BASE?.replace?.("/api/vehicles", "") ||
-                            "https://online-garage-api-2.onrender.com"
+                            "${CONFIG.API_BASE_URL}"
                           }${v.imagePath}`}
                           className="card-img-top"
                           alt="vehicle"

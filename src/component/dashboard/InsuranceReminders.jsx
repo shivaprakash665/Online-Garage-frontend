@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card, Badge } from "react-bootstrap";
 import axios from "axios";
 import "./Reminders.css";
+import CONFIG from "../../../src/config";
 
 function InsuranceReminders() {
   const [vehicles, setVehicles] = useState([]);
@@ -15,7 +16,7 @@ function InsuranceReminders() {
   const fetchInsuranceReminders = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("https://online-garage-api-2.onrender.com/api/vehicles", {
+      const response = await axios.get(`${CONFIG.API_BASE_URL}/api/vehicles`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       

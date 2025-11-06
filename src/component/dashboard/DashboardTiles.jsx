@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card, Badge } from "react-bootstrap";
 import axios from "axios";
 import "./DashboardTiles.css";
+import CONFIG from "../../../src/config";
 
 function DashboardTiles() {
   const [counts, setCounts] = useState({ 
@@ -22,10 +23,10 @@ function DashboardTiles() {
     try {
       setLoading(true);
       const [countsRes, remindersRes] = await Promise.all([
-        axios.get("https://online-garage-api-2.onrender.com/api/vehicles/counts", {
+        axios.get(`${CONFIG.API_BASE_URL}/api/vehicles/counts`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }),
-        axios.get("https://online-garage-api-2.onrender.com/api/vehicles/reminders", {
+        axios.get(`${CONFIG.API_BASE_URL}/api/vehicles/reminders`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
       ]);

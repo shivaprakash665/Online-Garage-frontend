@@ -1,4 +1,4 @@
-// component/dashboard/VehicleList.jsx
+
 import React, { useState, useEffect } from "react";
 import { 
   Row, 
@@ -13,6 +13,7 @@ import axios from "axios";
 import EditVehicleModal from "./EditVehicleModal";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import "./VehicleList.css";
+import CONFIG from "../../../src/config";
 
 function VehicleList() {
   const [vehicles, setVehicles] = useState([]);
@@ -40,7 +41,7 @@ function VehicleList() {
   const fetchVehicles = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("https://online-garage-api-2.onrender.com/api/vehicles", {
+      const res = await axios.get(`${CONFIG.API_BASE_URL}/api/vehicles`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setVehicles(res.data);
@@ -64,7 +65,7 @@ function VehicleList() {
 
   const handleDeleteConfirm = async () => {
     try {
-      await axios.delete(`https://online-garage-api-2.onrender.com/api/vehicles/${vehicleToDelete._id}`, {
+      await axios.delete(`${CONFIG.API_BASE_URL}/api/vehicles/${vehicleToDelete._id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       
@@ -158,7 +159,7 @@ function VehicleList() {
                   <div className="vehicle-card-header">
                     {vehicle.image && (
                       <img 
-                        src={`https://online-garage-api-2.onrender.com/${vehicle.image}`} 
+                        src={`${CONFIG.API_BASE_URL}/${vehicle.image}`} 
                         alt={vehicle.registrationNumber}
                         className="vehicle-image"
                       />

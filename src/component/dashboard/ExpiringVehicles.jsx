@@ -1,368 +1,279 @@
 // src/component/dashboard/ExpiringVehicles.jsx
-import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button, Badge, Modal, Form } from "react-bootstrap";
-import axios from "axios";
-import "./ExpiringVehicles.css";
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Table, Button, Modal, Form, Alert, Badge } from 'react-bootstrap';
+import axios from 'axios';
+import './ExpiringVehicles.css';
 
-function ExpiringVehicles({ showAlert }) {
+const ExpiringVehicles = ({ showAlert }) => {
   const [expiringVehicles, setExpiringVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [requestData, setRequestData] = useState({
-    renewalAmount: "",
-    insuranceCover: "Comprehensive",
-    coverageDetails: "",
-    message: ""
+    renewalAmount: '',
+    insuranceCover: 'Comprehensive',
+    coverageDetails: '',
+    message: ''
   });
 
   useEffect(() => {
     fetchExpiringVehicles();
-    const interval = setInterval(fetchExpiringVehicles, 30000);
-    return () => clearInterval(interval);
   }, []);
 
   const fetchExpiringVehicles = async () => {
     try {
-      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/expiring-vehicles", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:5000/api/insurance/agent/expiring-vehicles', {
+        headers: { Authorization: `Bearer ${token}` }
       });
       setExpiringVehicles(response.data);
-    } catch (err) {
-      console.error("Error fetching expiring vehicles:", err);
-      showAlert("Error loading expiring vehicles", "danger");
-    } finally {
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching expiring vehicles:', error);
+      showAlert('Failed to load expiring vehicles', 'danger');
       setLoading(false);
     }
   };
 
   const handleSendRequest = (vehicle) => {
     setSelectedVehicle(vehicle);
-    setRequestData({
-      renewalAmount: "",
-      insuranceCover: "Comprehensive",
-      coverageDetails: "",
-      message: ""
-    });
     setShowRequestModal(true);
   };
 
   const handleSubmitRequest = async () => {
     try {
-      await axios.post("https://online-garage-api-2.onrender.com/api/insurance/agent/send-request", 
-        {
-          vehicleId: selectedVehicle._id,
-          ...requestData
-        },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const token = localStorage.getItem('token');
+      await axios.post('http://localhost:5000/api/insurance/agent/send-request', {
+        vehicleId: selectedVehicle._id,
+        ...requestData
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-      showAlert("Insurance request sent successfully!", "success");
+      showAlert('Insurance request sent successfully!', 'success');
       setShowRequestModal(false);
-      fetchExpiringVehicles();
-    } catch (err) {
-      showAlert(err.response?.data?.message || "Error sending request", "danger");
+      setSelectedVehicle(null);
+      setRequestData({
+        renewalAmount: '',
+        insuranceCover: 'Comprehensive',
+        coverageDetails: '',
+        message: ''
+      });
+      fetchExpiringVehicles(); // Refresh the list
+    } catch (error) {
+      console.error('Error sending request:', error);
+      showAlert(error.response?.data?.message || 'Failed to send request', 'danger');
     }
   };
 
-  const getUrgencyLevel = (expiryDate) => {
+  const getExpiryStatus = (expiryDate) => {
     const now = new Date();
     const expiry = new Date(expiryDate);
-    const diffTime = expiry - now;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const daysUntilExpiry = Math.ceil((expiry - now) / (1000 * 60 * 60 * 24));
     
-    if (diffDays < 0) return { level: "expired", label: "Expired", badge: "danger" };
-    if (diffDays <= 7) return { level: "urgent", label: "Urgent", badge: "danger" };
-    if (diffDays <= 15) return { level: "soon", label: "Soon", badge: "warning" };
-    return { level: "upcoming", label: "Upcoming", badge: "info" };
+    if (daysUntilExpiry < 0) return { text: 'Expired', variant: 'danger' };
+    if (daysUntilExpiry <= 7) return { text: 'Urgent', variant: 'danger' };
+    if (daysUntilExpiry <= 30) return { text: 'Expiring Soon', variant: 'warning' };
+    return { text: 'Active', variant: 'success' };
   };
 
-  const groupVehiclesByUrgency = () => {
-    const groups = {
-      expired: [],
-      urgent: [],
-      soon: [],
-      upcoming: []
-    };
-
-    expiringVehicles.forEach(vehicle => {
-      const urgency = getUrgencyLevel(vehicle.insuranceExpiryDate);
-      groups[urgency.level].push(vehicle);
-    });
-
-    return groups;
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-IN');
   };
 
   if (loading) {
     return (
-      <div className="expiring-vehicles-loading">
-        <div className="spinner-border text-danger" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <Container>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
-      </div>
+      </Container>
     );
   }
 
-  const vehicleGroups = groupVehiclesByUrgency();
-
   return (
-    <div className="expiring-vehicles-container">
-      <div className="page-header">
-        <h4>Expiring Vehicles</h4>
-        <p className="text-muted">Vehicles with insurance expiring in the next 30 days</p>
-      </div>
-
-      <Row className="g-4">
-        {/* Expired Vehicles */}
-        {vehicleGroups.expired.length > 0 && (
-          <Col xs={12}>
-            <div className="urgency-section">
-              <h5 className="urgency-title text-danger">
-                <i className="bi bi-exclamation-triangle me-2"></i>
-                Expired ({vehicleGroups.expired.length})
-              </h5>
-              <Row className="g-3">
-                {vehicleGroups.expired.map(vehicle => (
-                  <VehicleCard 
-                    key={vehicle._id} 
-                    vehicle={vehicle} 
-                    urgency="expired" 
-                    onSendRequest={handleSendRequest}
-                  />
-                ))}
-              </Row>
-            </div>
-          </Col>
-        )}
-
-        {/* Other urgency groups... */}
-        {vehicleGroups.urgent.length > 0 && (
-          <Col xs={12}>
-            <div className="urgency-section">
-              <h5 className="urgency-title text-warning">
-                <i className="bi bi-exclamation-circle me-2"></i>
-                Urgent - Expiring within 7 days ({vehicleGroups.urgent.length})
-              </h5>
-              <Row className="g-3">
-                {vehicleGroups.urgent.map(vehicle => (
-                  <VehicleCard 
-                    key={vehicle._id} 
-                    vehicle={vehicle} 
-                    urgency="urgent" 
-                    onSendRequest={handleSendRequest}
-                  />
-                ))}
-              </Row>
-            </div>
-          </Col>
-        )}
-
-        {vehicleGroups.soon.length > 0 && (
-          <Col xs={12}>
-            <div className="urgency-section">
-              <h5 className="urgency-title text-info">
-                <i className="bi bi-clock me-2"></i>
-                Soon - Expiring in 8-15 days ({vehicleGroups.soon.length})
-              </h5>
-              <Row className="g-3">
-                {vehicleGroups.soon.map(vehicle => (
-                  <VehicleCard 
-                    key={vehicle._id} 
-                    vehicle={vehicle} 
-                    urgency="soon" 
-                    onSendRequest={handleSendRequest}
-                  />
-                ))}
-              </Row>
-            </div>
-          </Col>
-        )}
-
-        {vehicleGroups.upcoming.length > 0 && (
-          <Col xs={12}>
-            <div className="urgency-section">
-              <h5 className="urgency-title text-primary">
-                <i className="bi bi-calendar me-2"></i>
-                Upcoming - Expiring in 16-30 days ({vehicleGroups.upcoming.length})
-              </h5>
-              <Row className="g-3">
-                {vehicleGroups.upcoming.map(vehicle => (
-                  <VehicleCard 
-                    key={vehicle._id} 
-                    vehicle={vehicle} 
-                    urgency="upcoming" 
-                    onSendRequest={handleSendRequest}
-                  />
-                ))}
-              </Row>
-            </div>
-          </Col>
-        )}
-
-        {expiringVehicles.length === 0 && (
-          <Col xs={12}>
-            <Card className="no-vehicles-card">
-              <Card.Body className="text-center py-5">
-                <i className="bi bi-check-circle text-muted mb-3" style={{fontSize: '48px'}}></i>
-                <h5 className="text-muted">No Expiring Vehicles</h5>
-                <p className="text-muted">All vehicles have valid insurance coverage.</p>
-              </Card.Body>
-            </Card>
-          </Col>
-        )}
+    <Container fluid>
+      <Row>
+        <Col>
+          <Card>
+            <Card.Header className="d-flex justify-content-between align-items-center">
+              <h4 className="mb-0">Expiring Vehicles</h4>
+              <Badge bg="primary">{expiringVehicles.length} vehicles</Badge>
+            </Card.Header>
+            <Card.Body>
+              {expiringVehicles.length === 0 ? (
+                <div className="text-center py-4">
+                  <p className="text-muted">No vehicles with expiring insurance found.</p>
+                </div>
+              ) : (
+                <div className="table-responsive">
+                  <Table hover>
+                    <thead>
+                      <tr>
+                        <th>Vehicle Number</th>
+                        <th>Make & Model</th>
+                        <th>Current Insurance</th>
+                        <th>Expiry Date</th>
+                        <th>Status</th>
+                        <th>Owner</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {expiringVehicles.map((vehicle) => {
+                        const status = getExpiryStatus(vehicle.insuranceExpiryDate);
+                        return (
+                          <tr key={vehicle._id}>
+                            <td>
+                              <strong>{vehicle.registrationNumber}</strong>
+                            </td>
+                            <td>
+                              {vehicle.make} {vehicle.model}
+                            </td>
+                            <td>
+                              {vehicle.insuranceProvider || 'No insurance'}
+                              {vehicle.insuranceNumber && (
+                                <div>
+                                  <small className="text-muted">Policy: {vehicle.insuranceNumber}</small>
+                                </div>
+                              )}
+                            </td>
+                            <td>
+                              {formatDate(vehicle.insuranceExpiryDate)}
+                            </td>
+                            <td>
+                              <Badge bg={status.variant}>{status.text}</Badge>
+                            </td>
+                            <td>
+                              {vehicle.userId ? (
+                                <>
+                                  <div>{vehicle.userId.name}</div>
+                                  <small className="text-muted">
+                                    {vehicle.userId.phone ? `Phone: ${vehicle.userId.phone}` : 'Phone not available'}
+                                  </small>
+                                </>
+                              ) : (
+                                <span className="text-muted">Owner details not available</span>
+                              )}
+                            </td>
+                            <td>
+                              <Button
+                                size="sm"
+                                variant="primary"
+                                onClick={() => handleSendRequest(vehicle)}
+                                disabled={!vehicle.userId}
+                              >
+                                Send Request
+                              </Button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
       </Row>
 
       {/* Send Request Modal */}
-      <RequestModal 
-        show={showRequestModal}
-        onHide={() => setShowRequestModal(false)}
-        vehicle={selectedVehicle}
-        requestData={requestData}
-        setRequestData={setRequestData}
-        onSubmit={handleSubmitRequest}
-      />
-    </div>
-  );
-}
-
-// Vehicle Card Component
-const VehicleCard = ({ vehicle, urgency, onSendRequest }) => {
-  const urgencyConfig = {
-    expired: { badge: "danger", label: "EXPIRED", button: "danger" },
-    urgent: { badge: "warning", label: "URGENT", button: "warning" },
-    soon: { badge: "info", label: "SOON", button: "info" },
-    upcoming: { badge: "primary", label: "UPCOMING", button: "primary" }
-  };
-
-  const config = urgencyConfig[urgency];
-
-  return (
-    <Col xl={4} lg={6} md={6}>
-      <Card className={`vehicle-card ${urgency}`}>
-        <Card.Body>
-          <div className="vehicle-header">
-            <h6 className="vehicle-registration">{vehicle.registrationNumber}</h6>
-            <Badge bg={config.badge}>{config.label}</Badge>
-          </div>
-          <p className="vehicle-details">
-            {vehicle.make} {vehicle.model} • {vehicle.color}
-          </p>
-          <div className="vehicle-info">
-            <div className="info-item">
-              <i className="bi bi-calendar-x me-2"></i>
-              {urgency === 'expired' ? 'Expired: ' : 'Expires: '}
-              {new Date(vehicle.insuranceExpiryDate).toLocaleDateString()}
-            </div>
-            <div className="info-item">
-              <i className="bi bi-person me-2"></i>
-              Owner: {vehicle.userId?.name}
-            </div>
-            {urgency === 'expired' && (
-              <div className="info-item">
-                <i className="bi bi-telephone me-2"></i>
-                Phone: {vehicle.userId?.phone}
-              </div>
-            )}
-          </div>
-          <Button 
-            variant={config.button} 
-            size="sm" 
-            onClick={() => onSendRequest(vehicle)}
-            className="w-100 mt-2"
-          >
-            <i className="bi bi-send me-1"></i>
-            Send Renewal Request
+      <Modal show={showRequestModal} onHide={() => setShowRequestModal(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Send Insurance Renewal Request</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedVehicle && (
+            <>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <strong>Vehicle:</strong> {selectedVehicle.registrationNumber}
+                </Col>
+                <Col md={6}>
+                  <strong>Make & Model:</strong> {selectedVehicle.make} {selectedVehicle.model}
+                </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <strong>Current Expiry:</strong> {formatDate(selectedVehicle.insuranceExpiryDate)}
+                </Col>
+                <Col md={6}>
+                  <strong>Owner:</strong> {selectedVehicle.userId?.name || 'N/A'}
+                </Col>
+              </Row>
+              
+              <Form>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Renewal Amount (₹)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={requestData.renewalAmount}
+                        onChange={(e) => setRequestData({...requestData, renewalAmount: e.target.value})}
+                        placeholder="Enter amount"
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Insurance Cover Type</Form.Label>
+                      <Form.Select
+                        value={requestData.insuranceCover}
+                        onChange={(e) => setRequestData({...requestData, insuranceCover: e.target.value})}
+                      >
+                        <option value="Comprehensive">Comprehensive</option>
+                        <option value="Third Party">Third Party</option>
+                        <option value="Own Damage">Own Damage</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                
+                <Form.Group className="mb-3">
+                  <Form.Label>Coverage Details</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={requestData.coverageDetails}
+                    onChange={(e) => setRequestData({...requestData, coverageDetails: e.target.value})}
+                    placeholder="Describe the coverage details..."
+                    required
+                  />
+                </Form.Group>
+                
+                <Form.Group className="mb-3">
+                  <Form.Label>Additional Message (Optional)</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={2}
+                    value={requestData.message}
+                    onChange={(e) => setRequestData({...requestData, message: e.target.value})}
+                    placeholder="Any additional message for the user..."
+                  />
+                </Form.Group>
+              </Form>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowRequestModal(false)}>
+            Cancel
           </Button>
-        </Card.Body>
-      </Card>
-    </Col>
-  );
-};
-
-// Request Modal Component
-const RequestModal = ({ show, onHide, vehicle, requestData, setRequestData, onSubmit }) => {
-  return (
-    <Modal show={show} onHide={onHide} centered className="request-modal">
-      <Modal.Header closeButton className="modal-header-custom">
-        <Modal.Title>
-          <i className="bi bi-send me-2"></i>
-          Send Insurance Request
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {vehicle && (
-          <div className="selected-vehicle-info mb-4">
-            <h6>Vehicle Details</h6>
-            <p className="mb-1"><strong>{vehicle.registrationNumber}</strong></p>
-            <p className="mb-1">{vehicle.make} {vehicle.model} • {vehicle.color}</p>
-            <p className="mb-0 text-muted">
-              Insurance expires: {new Date(vehicle.insuranceExpiryDate).toLocaleDateString()}
-            </p>
-          </div>
-        )}
-        
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>Renewal Amount (₹)</Form.Label>
-            <Form.Control
-              type="number"
-              value={requestData.renewalAmount}
-              onChange={(e) => setRequestData({...requestData, renewalAmount: e.target.value})}
-              placeholder="Enter renewal amount"
-              className="form-control-custom"
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Insurance Cover Type</Form.Label>
-            <Form.Select
-              value={requestData.insuranceCover}
-              onChange={(e) => setRequestData({...requestData, insuranceCover: e.target.value})}
-              className="form-control-custom"
-            >
-              <option value="Comprehensive">Comprehensive</option>
-              <option value="Third Party">Third Party</option>
-              <option value="Own Damage">Own Damage</option>
-            </Form.Select>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Coverage Details</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              value={requestData.coverageDetails}
-              onChange={(e) => setRequestData({...requestData, coverageDetails: e.target.value})}
-              placeholder="Describe the coverage details..."
-              className="form-control-custom"
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Message to Vehicle Owner (Optional)</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={2}
-              value={requestData.message}
-              onChange={(e) => setRequestData({...requestData, message: e.target.value})}
-              placeholder="Add a personal message..."
-              className="form-control-custom"
-            />
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer className="modal-footer-custom">
-        <Button variant="outline-secondary" onClick={onHide}>
-          Cancel
-        </Button>
-        <Button variant="danger" onClick={onSubmit}>
-          <i className="bi bi-send me-1"></i>
-          Send Request
-        </Button>
-      </Modal.Footer>
-    </Modal>
+          <Button 
+            variant="primary" 
+            onClick={handleSubmitRequest}
+            disabled={!requestData.renewalAmount || !requestData.coverageDetails}
+          >
+            Send Request
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
 

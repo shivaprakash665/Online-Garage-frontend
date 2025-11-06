@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import CONFIG from "../../../src/config";
 
 function Login() {
   const [darkMode, setDarkMode] = useState(true);
@@ -29,7 +30,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://online-garage-frontend.onrender.com/api/login",
+        `${CONFIG.API_BASE_URL}/api/login`,
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );

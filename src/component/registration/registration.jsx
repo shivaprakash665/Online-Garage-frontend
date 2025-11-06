@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./registration.css";
+import CONFIG from "../../../src/config";
 
 const Register = () => {
   const navigate = useNavigate(); // hook for navigation
@@ -29,7 +30,7 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post("https://online-garage-frontend.onrender.com/api/register", {
+      const res = await axios.post(`${CONFIG.API_BASE_URL}/api/register`, {
         ...formData,
       });
       alert("✅ Registration successful!");
