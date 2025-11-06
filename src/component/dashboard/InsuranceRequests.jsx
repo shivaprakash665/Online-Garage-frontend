@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Table, Badge, Button, Modal, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import './InsuranceRequests.css';
+import CONFIG from "../../../src/config";
 
 const InsuranceRequests = () => {
   const [insuranceRequests, setInsuranceRequests] = useState([]);
@@ -18,7 +19,7 @@ const InsuranceRequests = () => {
   const fetchInsuranceRequests = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/insurance/user-requests', {
+      const response = await axios.get(`${CONFIG.API_BASE_URL}/api/insurance/user-requests`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setInsuranceRequests(response.data);
@@ -44,7 +45,7 @@ const InsuranceRequests = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:5000/api/insurance/accept-request/${requestId}`,
+        `${CONFIG.API_BASE_URL}/api/insurance/accept-request/${requestId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -62,7 +63,7 @@ const InsuranceRequests = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:5000/api/insurance/reject-request/${requestId}`,
+        `${CONFIG.API_BASE_URL}/api/insurance/reject-request/${requestId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

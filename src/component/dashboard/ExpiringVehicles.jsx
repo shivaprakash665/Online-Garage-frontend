@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Table, Button, Modal, Form, Alert, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import './ExpiringVehicles.css';
+import CONFIG from "../../../src/config";
 
 const ExpiringVehicles = ({ showAlert }) => {
   const [expiringVehicles, setExpiringVehicles] = useState([]);
@@ -23,7 +24,7 @@ const ExpiringVehicles = ({ showAlert }) => {
   const fetchExpiringVehicles = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/insurance/agent/expiring-vehicles', {
+      const response = await axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/expiring-vehicles`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setExpiringVehicles(response.data);
@@ -43,7 +44,7 @@ const ExpiringVehicles = ({ showAlert }) => {
   const handleSubmitRequest = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/insurance/agent/send-request', {
+      await axios.post(`${CONFIG.API_BASE_URL}/api/insurance/agent/send-request`, {
         vehicleId: selectedVehicle._id,
         ...requestData
       }, {
