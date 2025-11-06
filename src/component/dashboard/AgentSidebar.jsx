@@ -4,6 +4,7 @@ import { Nav, NavDropdown, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import axios from "axios";
 import "./AgentSidebar.css";
+import CONFIG from "../../../src/config";
 
 function AgentSidebar() {
   const [stats, setStats] = useState({
@@ -22,10 +23,10 @@ function AgentSidebar() {
   const fetchSidebarData = async () => {
     try {
       const [statsRes, notificationsRes] = await Promise.all([
-        axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/stats", {
+        axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/stats`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }),
-        axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/notifications", {
+        axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/notifications`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
       ]);

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Table, Badge, Button } from 'react-bootstrap';
 import axios from 'axios';
 import './SentRequests.css';
+import CONFIG from "../../../src/config";
 
 const SentRequests = ({ showAlert }) => {
   const [sentRequests, setSentRequests] = useState([]);
@@ -15,7 +16,7 @@ const SentRequests = ({ showAlert }) => {
   const fetchSentRequests = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/insurance/agent/requests', {
+      const response = await axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/requests`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSentRequests(response.data);
