@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import axios from "axios";
 import "./AgentDashboardTiles.css";
+import CONFIG from "../../../src/config";
 
 function AgentDashboardTiles({ showAlert }) {
   const [stats, setStats] = useState({
@@ -21,7 +22,7 @@ function AgentDashboardTiles({ showAlert }) {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/agent/stats", {
+      const response = await axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/stats`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setStats(response.data);

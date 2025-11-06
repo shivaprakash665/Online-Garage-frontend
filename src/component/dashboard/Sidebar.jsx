@@ -4,6 +4,7 @@ import { Nav, NavDropdown, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import axios from "axios";
 import "./Sidebar.css";
+import CONFIG from "../../../src/config";
 
 function Sidebar() {
   const [reminderCounts, setReminderCounts] = useState({
@@ -20,7 +21,7 @@ function Sidebar() {
 
   const fetchReminderCounts = async () => {
     try {
-      const response = await axios.get("https://online-garage-api-2.onrender.com/api/vehicles", {
+      const response = await axios.get(`${CONFIG.API_BASE_URL}/api/vehicles`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       
@@ -60,7 +61,7 @@ function Sidebar() {
 
   const fetchInsuranceRequestsCount = async () => {
     try {
-      const response = await axios.get("https://online-garage-api-2.onrender.com/api/insurance/user-requests", {
+      const response = await axios.get(`${CONFIG.API_BASE_URL}/api/insurance/user-requests`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       

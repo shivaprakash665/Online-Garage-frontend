@@ -95,6 +95,15 @@ function AgentDashboard() {
           </NavDropdown>
         </Nav>
       </Navbar>
+      // In AgentSidebar.jsx
+<Nav.Link onClick={() => navigate('/agentdashboard/expiring-vehicles')}>
+  <i className="bi bi-car-front me-2"></i>
+  Expiring Vehicles
+</Nav.Link>
+<Nav.Link onClick={() => navigate('/agentdashboard/sent-requests')}>
+  <i className="bi bi-send-check me-2"></i>
+  Sent Requests
+</Nav.Link>
 
       {alert.show && (
         <Alert variant={alert.type} className="alert-dismissible fade show agent-alert">

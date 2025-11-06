@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Col, Alert } from "react-bootstrap";
 import axios from "axios";
 import "./EditVehicleModal.css";
+import CONFIG from "../../../src/config";
 
 function EditVehicleModal({ show, onHide, vehicle, onVehicleUpdate }) {
   const [formData, setFormData] = useState({});
@@ -49,7 +50,7 @@ function EditVehicleModal({ show, onHide, vehicle, onVehicleUpdate }) {
 
     try {
       const response = await axios.put(
-        `https://online-garage-api-2.onrender.com/api/vehicles/${vehicle._id}`,
+        `${CONFIG.API_BASE_URL}/api/vehicles/${vehicle._id}`,
         data,
         {
           headers: {
@@ -73,7 +74,7 @@ function EditVehicleModal({ show, onHide, vehicle, onVehicleUpdate }) {
     if (newDate) {
       try {
         const response = await axios.put(
-          `https://online-garage-api-2.onrender.com/api/vehicles/renewal/${vehicle._id}`,
+          `${CONFIG.API_BASE_URL}/api/vehicles/renewal/${vehicle._id}`,
           { type, newDate },
           {
             headers: {
@@ -308,7 +309,7 @@ function EditVehicleModal({ show, onHide, vehicle, onVehicleUpdate }) {
               <Form.Label>Current Image</Form.Label>
               <div className="current-image-container">
                 <img 
-                  src={`https://online-garage-api-2.onrender.com/${vehicle.image}`} 
+                  src={`${CONFIG.API_BASE_URL}/${vehicle.image}`} 
                   alt="Current vehicle"
                   className="current-image"
                 />

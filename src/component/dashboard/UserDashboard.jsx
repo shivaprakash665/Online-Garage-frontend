@@ -8,7 +8,10 @@ import VehicleList from "./VehicleList";
 import ServiceReminders from "./ServiceReminders";
 import VehicleRenewal from "./VehicleRenewal";
 import InsuranceReminders from "./InsuranceReminders";
+
 import axios from "axios";
+import CONFIG from "../../../src/config";
+import InsuranceRequests from "./InsuranceRequests";
 
 
 function UserDashboard() {
@@ -39,7 +42,7 @@ function UserDashboard() {
 
   const handleFeedbackSubmit = async () => {
     try {
-      await axios.post("https://online-garage-api-2.onrender.com/api/feedback", { message: feedback }, {
+      await axios.post(`${CONFIG.API_BASE_URL}/api/feedback`, { message: feedback }, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       alert("Feedback submitted!");
@@ -73,6 +76,7 @@ function UserDashboard() {
             <Route path="/service-reminders" element={<ServiceReminders />} />
             <Route path="/renewal-reminders" element={<VehicleRenewal />} />
             <Route path="/insurance-reminders" element={<InsuranceReminders />} />
+            <Route path="/insurance-requests" element={<InsuranceRequests />} />
           </Routes>
         </Col>
       </Row>
