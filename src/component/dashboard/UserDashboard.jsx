@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Navbar, Nav, NavDropdown, Button, Modal, Form } from "react-bootstrap";
-import Sidebar from "./sidebar";
+import Sidebar from "./Sidebar";
 import DashboardTiles from "./DashboardTiles";
 import AddVehicle from "./AddVehicle";
 import VehicleList from "./VehicleList"; 
