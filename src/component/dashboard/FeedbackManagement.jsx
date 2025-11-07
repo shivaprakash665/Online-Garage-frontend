@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Table, Badge, Button, Form, Spinner, Alert, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import CONFIG from "../../../src/config";
+
 
 const FeedbackManagement = ({ showAlert }) => {
   const [feedback, setFeedback] = useState([]);
