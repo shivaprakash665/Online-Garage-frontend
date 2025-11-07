@@ -1,0 +1,100 @@
+/* src/component/dashboard/AdminSidebar.css */
+.admin-sidebar {
+  height: 100%;
+  background: linear-gradient(180deg, #2E8B57 0%, #1e6b42 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.sidebar-header h5 {
+  margin: 0;
+  font-weight: 600;
+  color: white;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.sidebar-nav-item {
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 0.75rem 1.5rem !important;
+  border: none !important;
+  background: transparent !important;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0.25rem 0.5rem;
+  border-radius: 8px;
+}
+
+.sidebar-nav-item:hover {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateX(5px);
+}
+
+.sidebar-nav-item.active {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  font-weight: 500;
+}
+
+.active-indicator {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.system-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-indicator.online {
+  background: #28a745;
+  box-shadow: 0 0 8px #28a745;
+}
+
+.system-status small {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 250px;
+  }
+  
+  .sidebar-nav-item {
+    padding: 1rem 1.5rem !important;
+  }
+}

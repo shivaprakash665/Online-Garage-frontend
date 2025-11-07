@@ -2,7 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./component/login/login";
 import Register from "./component/registration/registration";
-import AdminDashboard from "./component/dashboard/admin";
+import AdminDashboard from "./component/dashboard/AdminDashboard"; // Fixed import path
 import AgentDashboard from "./component/dashboard/AgentDashboard";
 import ForgotPassword from "./component/forgotpassword/forgotpassword";
 import UserDashboard from "./component/dashboard/UserDashboard";
@@ -43,7 +43,7 @@ function App() {
       <Route
         path="/agentdashboard/*"  
         element={
-          isAuthenticated && role === "insurance agent" ? // Fixed role name
+          isAuthenticated && role === "insurance agent" ?
             <AgentDashboard /> : 
             <Navigate to="/" />
         }

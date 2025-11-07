@@ -56,10 +56,10 @@ function Login() {
       const role = user.role?.toLowerCase().trim();
       console.log("User Role:", role); // Debug log
 
-      // Navigate based on role
+      // Navigate based on role - FIXED PATHS
       switch (role) {
         case "admin":
-          navigate("/admindashboard");
+          navigate("/admin-dashboard"); // Fixed: added hyphen
           break;
         case "insurance agent":
           navigate("/agentdashboard"); 
