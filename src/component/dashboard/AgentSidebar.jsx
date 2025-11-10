@@ -13,6 +13,7 @@ function AgentSidebar() {
     expiredVehiclesCount: 0
   });
   const [notifications, setNotifications] = useState([]);
+  const [incomingRequestsCount, setIncomingRequestsCount] = useState(0);
 
   useEffect(() => {
     fetchSidebarData();
@@ -22,17 +23,29 @@ function AgentSidebar() {
 
   const fetchSidebarData = async () => {
     try {
-      const [statsRes, notificationsRes] = await Promise.all([
+      const token = localStorage.getItem("token");
+      const [statsRes, notificationsRes, incomingRes] = await Promise.all([
         axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/stats`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${token}` },
         }),
         axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/notifications`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        // Fetch incoming requests count
+        axios.get(`${CONFIG.API_BASE_URL}/api/insurance/agent/incoming-requests`, {
+          headers: { Authorization: `Bearer ${token}` },
         })
       ]);
 
       setStats(statsRes.data);
       setNotifications(notificationsRes.data);
+      
+      // Count pending incoming requests
+      const pendingIncoming = incomingRes.data.filter(
+        request => request.status === 'pending'
+      ).length;
+      setIncomingRequestsCount(pendingIncoming);
+      
     } catch (err) {
       console.error("Error fetching sidebar data:", err);
     }
@@ -46,6 +59,19 @@ function AgentSidebar() {
           <Nav.Link className="sidebar-link">
             <i className="bi bi-speedometer2 sidebar-icon"></i>
             Dashboard
+          </Nav.Link>
+        </LinkContainer>
+        
+        {/* NEW: Incoming Requests */}
+        <LinkContainer to="/agentdashboard/incoming-requests">
+          <Nav.Link className="sidebar-link">
+            <i className="bi bi-inbox sidebar-icon"></i>
+            Incoming Requests
+            {incomingRequestsCount > 0 && (
+              <Badge bg="primary" className="sidebar-badge">
+                {incomingRequestsCount}
+              </Badge>
+            )}
           </Nav.Link>
         </LinkContainer>
         

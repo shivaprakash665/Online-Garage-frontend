@@ -1,4 +1,4 @@
-const isLive = true;  // change to true for live deployment
+const isLive = false;  // change to true for live deployment
 
 const CONFIG = {
   API_BASE_URL: isLive

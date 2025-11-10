@@ -12,6 +12,7 @@ import InsuranceReminders from "./InsuranceReminders";
 import axios from "axios";
 import CONFIG from "../../../src/config";
 import InsuranceRequests from "./InsuranceRequests";
+import UserRenewalRequest from "./UserRenewalRequest";
 
 
 
@@ -79,6 +80,7 @@ function UserDashboard() {
             <Route path="/renewal-reminders" element={<VehicleRenewal />} />
             <Route path="/insurance-reminders" element={<InsuranceReminders />} />
             <Route path="/insurance-requests" element={<InsuranceRequests />} />
+            <Route path="/request-renewal" element={<UserRenewalRequest />} />
           </Routes>
         </Col>
       </Row>

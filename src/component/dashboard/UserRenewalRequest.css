@@ -1,0 +1,24 @@
+/* src/component/dashboard/UserRenewalRequest.css */
+.user-renewal-request .table th {
+  background-color: #2E8B57;
+  color: white;
+}
+
+.user-renewal-request .vehicle-card {
+  transition: transform 0.2s ease;
+}
+
+.user-renewal-request .vehicle-card:hover {
+  transform: translateY(-2px);
+}
+
+/* src/component/dashboard/IncomingRequests.css */
+.incoming-requests .table th {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.incoming-requests .action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}

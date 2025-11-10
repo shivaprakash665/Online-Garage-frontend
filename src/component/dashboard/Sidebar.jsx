@@ -1,4 +1,4 @@
-// component/dashboard/Sidebar.jsx
+// src/component/dashboard/Sidebar.jsx
 import React, { useState, useEffect } from "react";
 import { Nav, NavDropdown, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
@@ -73,8 +73,6 @@ function Sidebar() {
       setInsuranceRequests(pendingRequests);
     } catch (err) {
       console.error("Error fetching insurance requests count:", err);
-      // If endpoint doesn't exist yet, set default value
-      setInsuranceRequests(1); // Default for demo
     }
   };
 
@@ -88,6 +86,14 @@ function Sidebar() {
           <Nav.Link className="sidebar-link">
             <i className="bi bi-speedometer2 sidebar-icon"></i>
             Dashboard
+          </Nav.Link>
+        </LinkContainer>
+        
+        {/* NEW: Request Insurance Renewal */}
+        <LinkContainer to="/userdashboard/request-renewal">
+          <Nav.Link className="sidebar-link">
+            <i className="bi bi-send-check sidebar-icon"></i>
+            Request Renewal
           </Nav.Link>
         </LinkContainer>
         
