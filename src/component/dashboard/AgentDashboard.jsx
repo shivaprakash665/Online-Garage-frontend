@@ -1,4 +1,4 @@
-// src/component/dashboard/AgentDashboard.jsx
+// src/component/dashboard/AgentDashboard.jsx - UPDATE
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Navbar, Nav, NavDropdown, Alert, Button } from "react-bootstrap";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import AgentSidebar from "./AgentSidebar";
 import AgentDashboardTiles from "./AgentDashboardTiles";
 import ExpiringVehicles from "./ExpiringVehicles";
 import SentRequests from "./SentRequests";
+import IncomingRequests from "./IncomingRequests"; // ADD THIS IMPORT
 import "./AgentDashboard.css";
 
 function AgentDashboard() {
@@ -18,9 +19,18 @@ function AgentDashboard() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
     
-    if (role !== "insurance agent") {
+    console.log("🔍 Dashboard - Stored role:", role);
+    
+    // More flexible role checking
+    const isAgent = role === "insurance agent" || 
+                   role === "insurance_agent" || 
+                   role === "agent" ||
+                   role === "insurance";
+    
+    if (!isAgent) {
+      console.log("⚠️ Role mismatch - Stored:", role, "Expected insurance agent");
       setRoleError(true);
-      showAlert("Access denied. Insurance agent role required.", "danger");
+      showAlert(`Access denied. Insurance agent role required. Your role: ${role}`, "danger");
       return;
     }
     
@@ -115,6 +125,7 @@ function AgentDashboard() {
                 <Route path="/" element={<AgentDashboardTiles showAlert={showAlert} />} />
                 <Route path="/expiring-vehicles" element={<ExpiringVehicles showAlert={showAlert} />} />
                 <Route path="/sent-requests" element={<SentRequests showAlert={showAlert} />} />
+                <Route path="/incoming-requests" element={<IncomingRequests showAlert={showAlert} />} /> {/* ADD THIS */}
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>

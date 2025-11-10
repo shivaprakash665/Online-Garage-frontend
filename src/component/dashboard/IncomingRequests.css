@@ -1,0 +1,359 @@
+/* src/component/dashboard/IncomingRequests.css */
+.incoming-requests-container {
+  padding: 0;
+}
+
+.incoming-requests-container .table th {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-weight: 500;
+}
+
+.incoming-requests-container .table td {
+  padding: 1rem;
+  vertical-align: middle;
+  border-color: #e9ecef;
+}
+
+.incoming-requests-container .table-hover tbody tr:hover {
+  background-color: rgba(23, 162, 184, 0.05);
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.action-buttons .btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.action-buttons .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Status badges */
+.status-badge-pending {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.status-badge-accepted {
+  background-color: #198754;
+  color: #fff;
+}
+
+.status-badge-rejected {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.status-badge-completed {
+  background-color: #0dcaf0;
+  color: #000;
+}
+
+/* Modal styling */
+.incoming-requests-modal .modal-header {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+  border-bottom: none;
+}
+
+.incoming-requests-modal .modal-header .btn-close {
+  filter: invert(1);
+}
+
+.incoming-requests-modal .modal-body {
+  padding: 1.5rem;
+}
+
+.incoming-requests-modal .form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.incoming-requests-modal .form-control,
+.incoming-requests-modal .form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.incoming-requests-modal .form-control:focus,
+.incoming-requests-modal .form-select:focus {
+  border-color: #17a2b8;
+  box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+}
+
+/* Vehicle info card in modal */
+.vehicle-info-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.vehicle-info-card .row {
+  margin-bottom: 0.5rem;
+}
+
+.vehicle-info-card strong {
+  color: #495057;
+}
+
+/* Button styles */
+.btn-accept {
+  background: linear-gradient(135deg, #198754 0%, #157347 100%);
+  border: none;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-accept:hover {
+  background: linear-gradient(135deg, #157347 0%, #198754 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(25, 135, 84, 0.3);
+}
+
+.btn-reject {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  border: none;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-reject:hover {
+  background: linear-gradient(135deg, #c82333 0%, #dc3545 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Loading states */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+}
+
+.empty-state .empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state h5 {
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .incoming-requests-container .table-responsive {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .action-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .incoming-requests-modal .modal-dialog {
+    margin: 0.5rem;
+  }
+  
+  .vehicle-info-card .row > div {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Animation for new requests */
+@keyframes highlightNew {
+  0% {
+    background-color: rgba(23, 162, 184, 0.1);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.highlight-new {
+  animation: highlightNew 2s ease-in-out;
+}
+
+/* Badge styles in table */
+.sidebar-badge {
+  font-size: 0.7em;
+  margin-left: 0.5rem;
+}
+
+/* Customer info styling */
+.customer-info {
+  line-height: 1.4;
+}
+
+.customer-info strong {
+  color: #495057;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.customer-info small {
+  color: #6c757d;
+  display: block;
+}
+
+/* Vehicle info in table */
+.vehicle-info {
+  line-height: 1.4;
+}
+
+.vehicle-info strong {
+  color: #495057;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.vehicle-info small {
+  color: #6c757d;
+  display: block;
+}
+
+/* Modal footer buttons */
+.modal-footer-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+@media (max-width: 576px) {
+  .modal-footer-buttons {
+    flex-direction: column;
+  }
+  
+  .modal-footer-buttons .btn {
+    width: 100%;
+  }
+}
+
+/* Form group spacing */
+.form-group-spaced {
+  margin-bottom: 1.5rem;
+}
+
+/* Text area styling */
+.textarea-expand {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Currency input styling */
+.currency-input {
+  position: relative;
+}
+
+.currency-input::before {
+  content: "₹";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-weight: 500;
+  z-index: 1;
+}
+
+.currency-input .form-control {
+  padding-left: 30px;
+}
+
+/* Success/error message styling */
+.alert-message {
+  border-radius: 8px;
+  border: none;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.alert-message .btn-close {
+  padding: 1rem 1.25rem;
+}
+
+/* Card header enhancements */
+.card-header-enhanced {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+  border: none;
+  padding: 1rem 1.25rem;
+}
+
+.card-header-enhanced h5 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Refresh button styling */
+.btn-refresh {
+  background: transparent;
+  border: 2px solid #17a2b8;
+  color: #17a2b8;
+  transition: all 0.3s ease;
+}
+
+.btn-refresh:hover {
+  background: #17a2b8;
+  color: white;
+  transform: rotate(180deg);
+}
+
+/* Table row status indicators */
+.table-row-pending {
+  border-left: 4px solid #ffc107;
+}
+
+.table-row-accepted {
+  border-left: 4px solid #198754;
+}
+
+.table-row-rejected {
+  border-left: 4px solid #dc3545;
+}
+
+.table-row-completed {
+  border-left: 4px solid #0dcaf0;
+}

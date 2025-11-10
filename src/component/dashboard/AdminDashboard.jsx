@@ -9,6 +9,7 @@ import UserManagement from "./UserManagement";
 import UserDetails from "./UserDetails";
 import FeedbackManagement from "./FeedbackManagement";
 import "./AdminDashboard.css";
+import IncomingRequests from "./IncomingRequests";
 
 function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -120,6 +121,7 @@ function AdminDashboard() {
                 <Route path="/users" element={<UserManagement showAlert={showAlert} />} />
                 <Route path="/users/:userId" element={<UserDetails showAlert={showAlert} />} />
                 <Route path="/feedback" element={<FeedbackManagement showAlert={showAlert} />} />
+                <Route path="/incoming-requests" element={<IncomingRequests showAlert={showAlert} />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
