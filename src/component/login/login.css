@@ -1,155 +1,300 @@
-/* --------------------------
-   FULL-PAGE CONTAINER
---------------------------- */
+/* login.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .container {
-  width: 100vw;
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #e8f0ff, #ffffff);
-  transition: background 0.5s ease, color 0.5s ease;
-  position: relative;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8f9fa;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.container.dark {
-  background: linear-gradient(135deg, #0a0a10, #1d1d2f);
-  color: #f5f5f5;
+/* Optional: Add some decorative elements for better visual appeal */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.03) 0%, transparent 50%);
+  pointer-events: none;
 }
 
-/* --------------------------
-   LOGIN BOX
---------------------------- */
 .login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.05),
+    0 5px 10px rgba(0, 0, 0, 0.02);
+  width: 90%;
+  max-width: 400px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   z-index: 1;
-  width: 90%;
-  max-width: 420px;
-  padding: 2rem 1.8rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.container.dark .login-box {
-  background: rgba(30, 30, 45, 0.85);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+.login-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.08),
+    0 8px 15px rgba(0, 0, 0, 0.03);
 }
 
-/* --------------------------
-   HEADINGS
---------------------------- */
 .login-box h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
   font-weight: 600;
-  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* --------------------------
-   FORM
---------------------------- */
-form {
+.login-box form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 20px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  gap: 8px;
 }
 
 .form-group label {
-  margin-bottom: 4px;
   font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.form-group input {
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  outline: none;
+.login-box input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
   transition: all 0.3s ease;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  color: #374151;
 }
 
-.container.dark .form-group input {
-  background: #2a2a3d;
-  color: #fff;
-  border: 1px solid #444;
+.login-box input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.form-group input:focus {
-  border: 1px solid #007bff;
-  box-shadow: 0 0 8px rgba(0,123,255,0.3);
+.login-box input::placeholder {
+  color: #9ca3af;
 }
 
-/* --------------------------
-   ACTION LINKS
---------------------------- */
 .actions {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
-  margin-bottom: 6px;
+  align-items: center;
+  margin: 15px 0;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .link-btn {
   background: transparent;
   border: none;
-  color: #007bff;
+  color: #667eea;
   cursor: pointer;
-  padding: 0;
-  font-size: 13px;
+  text-decoration: underline;
+  font-size: 14px;
+  padding: 5px;
+  transition: color 0.3s ease;
 }
 
 .link-btn:hover {
-  text-decoration: underline;
+  color: #764ba2;
+  text-decoration: none;
 }
 
-/* --------------------------
-   MESSAGES
---------------------------- */
-.error {
-  color: #ff4d4f;
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-.success {
-  color: #28a745;
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-/* --------------------------
-   SUBMIT BUTTON
---------------------------- */
 .submit-btn {
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: #fff;
-  padding: 14px;
-  border-radius: 12px;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
   border: none;
+  border-radius: 8px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
 }
 
-.submit-btn:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(0,123,255,0.3);
-  background: linear-gradient(135deg, #0056b3, #003c80);
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
-/* --------------------------
-   RESPONSIVE
---------------------------- */
-@media (max-width: 600px) {
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.error {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 14px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.success {
+  color: #065f46;
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 14px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+/* Focus styles for accessibility */
+.login-box input:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.link-btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Loading state animation */
+.submit-btn:disabled::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
   .login-box {
+    padding: 30px 25px;
     width: 95%;
-    padding: 1.8rem 1rem;
+    margin: 20px;
+  }
+  
+  .login-box h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .login-box form {
+    gap: 15px;
+  }
+  
+  .login-box input {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 10px 0;
+  }
+  
+  .link-btn {
+    font-size: 13px;
+  }
+  
+  .submit-btn {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* For extremely small screens */
+@media (max-width: 320px) {
+  .login-box {
+    padding: 25px 20px;
+    margin: 15px;
+  }
+  
+  .login-box h1 {
+    font-size: 22px;
+  }
+  
+  .login-box input {
+    padding: 10px;
+  }
+}
+
+/* For landscape orientation on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .container {
+    align-items: flex-start;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .login-box {
+    max-height: 90vh;
+    overflow-y: auto;
   }
 }
