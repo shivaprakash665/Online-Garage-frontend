@@ -5,8 +5,7 @@ import "./registration.css";
 import CONFIG from "../../../src/config";
 
 const Register = () => {
-  const navigate = useNavigate(); // hook for navigation
-  const [darkMode, setDarkMode] = useState(true);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,8 +15,6 @@ const Register = () => {
     confirmPassword: "",
     role: "user",
   });
-
-  const toggleTheme = () => setDarkMode(!darkMode);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,18 +32,14 @@ const Register = () => {
       });
       alert("✅ Registration successful!");
       localStorage.setItem("token", res.data.token);
-      navigate("/"); // Redirect to login after successful registration
+      navigate("/");
     } catch (err) {
       alert(err.response?.data?.message || "Server error");
     }
   };
 
   return (
-    <div className={`main-container ${darkMode ? "dark" : "light"}`}>
-      <button className="theme-toggle" onClick={toggleTheme}>
-        {darkMode ? "🌞" : "🌙"}
-      </button>
-
+    <div className="main-container">
       <div className="register-card">
         <h2>Create Account</h2>
 
@@ -118,19 +111,9 @@ const Register = () => {
           </button>
         </form>
 
-        {/* Button to go to login page */}
         <button
           className="login-btn"
           onClick={() => navigate("/")}
-          style={{
-            marginTop: "12px",
-            background: "transparent",
-            border: "none",
-            color: "#007bff",
-            cursor: "pointer",
-            textDecoration: "underline",
-            fontSize: "14px",
-          }}
         >
           Already have an account? Login
         </button>

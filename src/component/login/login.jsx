@@ -5,7 +5,6 @@ import "./login.css";
 import CONFIG from "../../../src/config";
 
 function Login() {
-  const [darkMode, setDarkMode] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,8 +12,6 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const toggleTheme = () => setDarkMode(!darkMode);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +32,7 @@ function Login() {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      console.log("Login Response:", response.data); // Debug log
+      console.log("Login Response:", response.data);
 
       const { message, token, user } = response.data;
 
@@ -48,18 +45,18 @@ function Login() {
       // Store authentication data
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("role", user.role); // Store role separately
+      localStorage.setItem("role", user.role);
 
       setSuccess(message || "Login successful!");
 
       // Normalize role for comparison
       const role = user.role?.toLowerCase().trim();
-      console.log("User Role:", role); // Debug log
+      console.log("User Role:", role);
 
-      // Navigate based on role - FIXED PATHS
+      // Navigate based on role
       switch (role) {
         case "admin":
-          navigate("/admin-dashboard"); // Fixed: added hyphen
+          navigate("/admin-dashboard");
           break;
         case "insurance agent":
           navigate("/agentdashboard"); 
@@ -70,7 +67,6 @@ function Login() {
         default:
           console.error("Unknown role:", role);
           setError("Invalid user role. Please contact administrator.");
-          // Clear invalid auth data
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           localStorage.removeItem("role");
@@ -82,7 +78,6 @@ function Login() {
       } else {
         setError("Network error. Please try again.");
       }
-      // Clear any partial auth data on error
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       localStorage.removeItem("role");
@@ -92,48 +87,34 @@ function Login() {
   };
 
   return (
-    <div className={`container ${darkMode ? "dark" : "light"}`}>
-      <button
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          borderRadius: "50%",
-          padding: "6px 8px",
-          cursor: "pointer",
-          fontSize: "20px",
-          border: "2px solid currentColor",
-          background: "transparent",
-          zIndex: 10,
-        }}
-        onClick={toggleTheme}
-      >
-        {darkMode ? "🌞" : "🌙"}
-      </button>
-
+    <div className="container">
       <div className="login-box">
         <h1>Sign in to your account</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
+              id="email"
               type="email"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="email"
             />
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input
+              id="password"
               type="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="current-password"
             />
           </div>
 
