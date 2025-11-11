@@ -156,3 +156,19 @@
     margin-bottom: 5px;
   }
 }
+
+/* InsuranceRequests.css - ADD THESE STYLES */
+.user-original-request {
+  background: #f8f9fa;
+  border-left: 4px solid #17a2b8;
+  font-size: 0.85rem;
+}
+
+.table-success {
+  background-color: rgba(40, 167, 69, 0.1) !important;
+}
+
+.alert-info h6 {
+  color: #0c5460;
+  font-weight: 600;
+}

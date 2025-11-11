@@ -1,4 +1,4 @@
-// src/component/dashboard/IncomingRequests.jsx - FINAL FIXED VERSION
+// src/component/dashboard/IncomingRequests.jsx - UPDATED WITH COMPLETE FLOW
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Table, Badge, Button, Modal, Form, Alert, Spinner } from 'react-bootstrap';
 import axios from 'axios';
@@ -52,9 +52,9 @@ const IncomingRequests = ({ showAlert }) => {
 
   const handleAccept = (request) => {
     setSelectedRequest(request);
-    // Pre-fill with user's requested details if available
-    const userAmount = request.userExpectedAmount || request.renewalAmount || '';
-    const userCover = request.userCoverType || request.insuranceCover || 'comprehensive';
+    // Pre-fill with user's requested details
+    const userAmount = request.userExpectedAmount || '';
+    const userCover = request.userCoverType || 'comprehensive';
     
     setAcceptData({
       renewalAmount: userAmount,
@@ -87,13 +87,13 @@ const IncomingRequests = ({ showAlert }) => {
       );
 
       console.log("✅ Accept response:", response.data);
-      showAlert('Request accepted successfully! User will be notified.', 'success');
+      showAlert('Insurance offer sent to user successfully! Waiting for user acceptance.', 'success');
       setShowAcceptModal(false);
       setSelectedRequest(null);
       fetchIncomingRequests();
     } catch (error) {
-      console.error('❌ Error accepting request:', error);
-      const errorMessage = error.response?.data?.message || 'Failed to accept request';
+      console.error('❌ Error sending offer:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to send offer';
       showAlert(errorMessage, 'danger');
     } finally {
       setProcessing(false);
@@ -126,12 +126,13 @@ const IncomingRequests = ({ showAlert }) => {
     }
   };
 
-  const getStatusBadge = (status) => {
+  const getStatusBadge = (status, requestType) => {
     const statusConfig = {
-      'pending': { bg: 'warning', text: 'Pending' },
-      'accepted': { bg: 'success', text: 'Accepted' },
-      'rejected': { bg: 'danger', text: 'Rejected' },
-      'completed': { bg: 'info', text: 'Completed' }
+      'pending': { bg: 'warning', text: 'PENDING' },
+      'offer_sent': { bg: 'info', text: 'OFFER SENT' }, // NEW STATUS
+      'accepted': { bg: 'success', text: 'ACCEPTED BY USER' },
+      'rejected': { bg: 'danger', text: 'REJECTED' },
+      'completed': { bg: 'primary', text: 'COMPLETED' }
     };
     
     const config = statusConfig[status] || { bg: 'secondary', text: status };
@@ -152,12 +153,11 @@ const IncomingRequests = ({ showAlert }) => {
 
   // Display user's requested details
   const displayUserRequestDetails = (request) => {
-    // Show details for user_to_agent requests
     if (request.requestType === 'user_to_agent') {
       return (
         <div className="user-request-details mt-2 p-2 bg-light rounded">
           <small>
-            <strong>User's Request:</strong><br/>
+            <strong>User's Original Request:</strong><br/>
             • Expected Amount: {formatCurrency(request.userExpectedAmount)}<br/>
             • Cover Type: <Badge bg="primary" className="text-capitalize">{request.userCoverType}</Badge><br/>
             {request.userMessage && `• Message: ${request.userMessage}`}
@@ -165,17 +165,71 @@ const IncomingRequests = ({ showAlert }) => {
         </div>
       );
     }
-    
-    // For agent_to_user requests, show basic info
-    return (
-      <div className="user-request-details mt-2 p-2 bg-light rounded">
-        <small>
-          <strong>Request Type:</strong> Agent Initiated<br/>
-          • Amount: {formatCurrency(request.renewalAmount)}<br/>
-          • Cover: <Badge bg="secondary" className="text-capitalize">{request.insuranceCover}</Badge>
-        </small>
-      </div>
-    );
+    return null;
+  };
+
+  // Get action buttons based on status
+  const getActionButtons = (request) => {
+    switch (request.status) {
+      case 'pending':
+        return (
+          <div className="d-flex gap-1">
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => handleAccept(request)}
+              className="d-flex align-items-center"
+            >
+              <i className="bi bi-check-lg me-1"></i>
+              Send Offer
+            </Button>
+            <Button
+              variant="outline-danger"
+              size="sm"
+              onClick={() => handleReject(request)}
+              className="d-flex align-items-center"
+            >
+              <i className="bi bi-x-lg me-1"></i>
+              Reject
+            </Button>
+          </div>
+        );
+      
+      case 'offer_sent':
+        return (
+          <small className="text-info">
+            <i className="bi bi-clock me-1"></i>
+            Waiting for user response
+          </small>
+        );
+      
+      case 'accepted':
+        return (
+          <small className="text-success">
+            <i className="bi bi-check-circle me-1"></i>
+            User accepted - Ready to complete
+          </small>
+        );
+      
+      case 'rejected':
+        return (
+          <small className="text-muted">
+            <i className="bi bi-x-circle me-1"></i>
+            Rejected by user
+          </small>
+        );
+      
+      case 'completed':
+        return (
+          <small className="text-primary">
+            <i className="bi bi-check-all me-1"></i>
+            Completed
+          </small>
+        );
+      
+      default:
+        return <small className="text-muted">No actions</small>;
+    }
   };
 
   if (loading) {
@@ -210,9 +264,17 @@ const IncomingRequests = ({ showAlert }) => {
             <i className="bi bi-inbox me-2"></i>
             User Requests ({incomingRequests.length})
           </h5>
-          <Badge bg="light" text="dark">
-            {incomingRequests.filter(r => r.status === 'pending').length} Pending
-          </Badge>
+          <div className="d-flex gap-2">
+            <Badge bg="warning" text="dark">
+              {incomingRequests.filter(r => r.status === 'pending').length} Pending
+            </Badge>
+            <Badge bg="info" text="dark">
+              {incomingRequests.filter(r => r.status === 'offer_sent').length} Offers Sent
+            </Badge>
+            <Badge bg="success" text="dark">
+              {incomingRequests.filter(r => r.status === 'accepted').length} Accepted
+            </Badge>
+          </div>
         </Card.Header>
         
         {incomingRequests.length === 0 ? (
@@ -236,7 +298,10 @@ const IncomingRequests = ({ showAlert }) => {
               </thead>
               <tbody>
                 {incomingRequests.map((request) => (
-                  <tr key={request._id}>
+                  <tr key={request._id} className={
+                    request.status === 'completed' ? 'table-success' : 
+                    request.status === 'accepted' ? 'table-warning' : ''
+                  }>
                     <td>
                       <div>
                         <small className="fw-semibold">{formatDate(request.createdAt)}</small>
@@ -292,46 +357,18 @@ const IncomingRequests = ({ showAlert }) => {
                       )}
                     </td>
                     <td>
-                      {getStatusBadge(request.status)}
-                    </td>
-                    <td>
-                      {request.status === 'pending' && (
-                        <div className="d-flex gap-1">
-                          <Button
-                            variant="success"
-                            size="sm"
-                            onClick={() => handleAccept(request)}
-                            className="d-flex align-items-center"
-                          >
-                            <i className="bi bi-check-lg me-1"></i>
-                            Accept
-                          </Button>
-                          <Button
-                            variant="outline-danger"
-                            size="sm"
-                            onClick={() => handleReject(request)}
-                            className="d-flex align-items-center"
-                          >
-                            <i className="bi bi-x-lg me-1"></i>
-                            Reject
-                          </Button>
+                      {getStatusBadge(request.status, request.requestType)}
+                      {request.status === 'accepted' && (
+                        <div className="mt-1">
+                          <small className="text-success">
+                            <i className="bi bi-check-circle me-1"></i>
+                            Ready to complete
+                          </small>
                         </div>
                       )}
-                      {request.status === 'accepted' && (
-                        <small className="text-success">
-                          <i className="bi bi-check-circle me-1"></i>
-                          Waiting for user
-                        </small>
-                      )}
-                      {request.status === 'rejected' && (
-                        <small className="text-muted">Rejected</small>
-                      )}
-                      {request.status === 'completed' && (
-                        <small className="text-info">
-                          <i className="bi bi-check-all me-1"></i>
-                          Completed
-                        </small>
-                      )}
+                    </td>
+                    <td>
+                      {getActionButtons(request)}
                     </td>
                   </tr>
                 ))}
@@ -344,7 +381,10 @@ const IncomingRequests = ({ showAlert }) => {
       {/* Accept Request Modal */}
       <Modal show={showAcceptModal} onHide={() => setShowAcceptModal(false)} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Accept Insurance Request</Modal.Title>
+          <Modal.Title>
+            <i className="bi bi-send-check me-2"></i>
+            Send Insurance Offer to User
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedRequest && (
@@ -361,15 +401,20 @@ const IncomingRequests = ({ showAlert }) => {
               {/* Show user's original request for user_to_agent */}
               {selectedRequest.requestType === 'user_to_agent' && (
                 <div className="alert alert-info mb-3">
-                  <h6>User's Original Request</h6>
-                  <div className="row">
+                  <h6>
+                    <i className="bi bi-person me-2"></i>
+                    User's Original Request
+                  </h6>
+                  <Row>
                     <div className="col-md-4">
                       <strong>Expected Amount:</strong><br/>
                       {formatCurrency(selectedRequest.userExpectedAmount)}
                     </div>
                     <div className="col-md-4">
                       <strong>Cover Type:</strong><br/>
-                      <Badge bg="primary">{selectedRequest.userCoverType}</Badge>
+                      <Badge bg="primary" className="text-capitalize">
+                        {selectedRequest.userCoverType}
+                      </Badge>
                     </div>
                     {selectedRequest.userMessage && (
                       <div className="col-md-12 mt-2">
@@ -377,7 +422,7 @@ const IncomingRequests = ({ showAlert }) => {
                         {selectedRequest.userMessage}
                       </div>
                     )}
-                  </div>
+                  </Row>
                 </div>
               )}
 
@@ -391,7 +436,15 @@ const IncomingRequests = ({ showAlert }) => {
               </Row>
 
               <hr/>
-              <h6>Your Offer Details</h6>
+              <h6 className="text-success">
+                <i className="bi bi-currency-exchange me-2"></i>
+                Your Insurance Offer
+              </h6>
+              <Alert variant="warning" className="small">
+                <i className="bi bi-info-circle me-2"></i>
+                User will need to accept this offer before you can complete the insurance.
+              </Alert>
+              
               <Form>
                 <Row>
                   <Col md={6}>
@@ -433,7 +486,7 @@ const IncomingRequests = ({ showAlert }) => {
                     rows={3}
                     value={acceptData.coverageDetails}
                     onChange={(e) => setAcceptData({...acceptData, coverageDetails: e.target.value})}
-                    placeholder="Describe the coverage details and terms..."
+                    placeholder="Describe the coverage details, terms, and benefits..."
                     required
                   />
                 </Form.Group>
@@ -453,12 +506,12 @@ const IncomingRequests = ({ showAlert }) => {
             {processing ? (
               <>
                 <Spinner animation="border" size="sm" className="me-2" />
-                Processing...
+                Sending Offer...
               </>
             ) : (
               <>
-                <i className="bi bi-check-lg me-2"></i>
-                Send Offer
+                <i className="bi bi-send-check me-2"></i>
+                Send Offer to User
               </>
             )}
           </Button>
@@ -468,24 +521,32 @@ const IncomingRequests = ({ showAlert }) => {
       {/* Reject Request Modal */}
       <Modal show={showRejectModal} onHide={() => setShowRejectModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Reject Insurance Request</Modal.Title>
+          <Modal.Title>
+            <i className="bi bi-x-circle me-2"></i>
+            Reject Insurance Request
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedRequest && (
             <>
-              <p>Reject request from <strong>{selectedRequest.userId?.name}</strong> for vehicle <strong>{selectedRequest.vehicleId?.registrationNumber}</strong>?</p>
+              <Alert variant="warning">
+                <p>Are you sure you want to reject the insurance request from <strong>{selectedRequest.userId?.name}</strong> for vehicle <strong>{selectedRequest.vehicleId?.registrationNumber}</strong>?</p>
+              </Alert>
               
               <Form.Group className="mb-3">
                 <Form.Label>Rejection Reason (Optional)</Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={2}
+                  rows={3}
                   value={rejectionReason}
                   onChange={(e) => setRejectionReason(e.target.value)}
-                  placeholder="Provide a reason for rejection..."
+                  placeholder="Provide a reason for rejection. This will be sent to the user..."
                 />
+                <Form.Text className="text-muted">
+                  The user will be notified that their request was rejected.
+                </Form.Text>
               </Form.Group>
-            </>
+            </> 
           )}
         </Modal.Body>
         <Modal.Footer>
@@ -505,7 +566,7 @@ const IncomingRequests = ({ showAlert }) => {
             ) : (
               <>
                 <i className="bi bi-x-lg me-2"></i>
-                Reject
+                Reject Request
               </>
             )}
           </Button>
