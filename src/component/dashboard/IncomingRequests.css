@@ -357,3 +357,26 @@
 .table-row-completed {
   border-left: 4px solid #0dcaf0;
 }
+/* IncomingRequests.css */
+.user-request-details {
+  background: #f8f9fa;
+  border-left: 4px solid #007bff;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.user-request-details strong {
+  color: #495057;
+}
+
+.admin-table .table th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  padding: 0.25em 0.6em;
+}
