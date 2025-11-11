@@ -186,31 +186,7 @@ function Sidebar() {
           </Nav.Link>
         </LinkContainer>
 
-        {/* Profile Dropdown */}
-        <NavDropdown 
-          title={
-            <span>
-              <i className="bi bi-person-circle sidebar-icon"></i>
-              Profile
-            </span>
-          } 
-          id="profile-dropdown"
-          className="sidebar-dropdown"
-        >
-          <NavDropdown.Item className="dropdown-item">
-            <i className="bi bi-person me-2"></i>
-            My Profile
-          </NavDropdown.Item>
-          <NavDropdown.Item className="dropdown-item">
-            <i className="bi bi-gear me-2"></i>
-            Settings
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item className="dropdown-item text-danger">
-            <i className="bi bi-box-arrow-right me-2"></i>
-            Logout
-          </NavDropdown.Item>
-        </NavDropdown>
+       
       </Nav>
     </div>
   );

@@ -233,7 +233,7 @@ function VehicleList() {
                       className="action-btn"
                     >
                       <i className="bi bi-pencil me-1"></i>
-                      Edit
+                      Edit / View Details
                     </Button>
                     <Button
                       variant="outline-danger"
