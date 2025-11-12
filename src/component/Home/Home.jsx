@@ -29,7 +29,7 @@ const Home = () => {
             <div className="home-logo-icon">
               <i className="bi bi-car-front-fill"></i>
             </div>
-            <span className="home-logo-text">FleetTrackR</span>
+            <span className="home-logo-text">fleettrackR</span>
           </div>
 
           {/* Navigation - Right Side */}
@@ -88,7 +88,7 @@ const Home = () => {
         <div className="home-container-inner">
           <h2 className="home-section-title">About FleetTrackR</h2>
           <p className="home-section-desc">
-            FleetTrackR is your all-in-one solution for vehicle fleet management. 
+            fleettrackR is your all-in-one solution for vehicle fleet management. 
             We help businesses and individuals streamline their vehicle operations.
           </p>
           <div className="home-features">
@@ -152,7 +152,7 @@ const Home = () => {
               <span>FleetTrackR</span>
             </div>
             <p className="home-footer-text">
-              &copy; 2024 FleetTrackR. All rights reserved.
+              &copy; 2024 fleettrackR. All rights reserved.
             </p>
           </div>
         </div>
