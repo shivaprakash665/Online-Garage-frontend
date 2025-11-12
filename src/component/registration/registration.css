@@ -77,7 +77,7 @@ html, body {
   margin-bottom: 40px;
   font-size: 32px;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #036529, #408e49);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -122,9 +122,9 @@ html, body {
 
 .register-card input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #058323;
   background-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 4px rgba(102, 234, 133, 0.1);
 }
 
 .register-card input::placeholder {
@@ -152,7 +152,7 @@ html, body {
 
 .custom-select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #018e3a;
   background-color: #ffffff;
   box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 }
@@ -163,7 +163,7 @@ html, body {
   top: 50%;
   right: 20px;
   transform: translateY(-50%);
-  color: #667eea;
+  color: #058643;
   pointer-events: none;
   font-size: 12px;
 }
@@ -171,7 +171,7 @@ html, body {
 .register-btn {
   width: 100%;
   padding: 18px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #91f1c0 0%, #03732c 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -186,7 +186,7 @@ html, body {
 
 .register-btn:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 25px rgba(102, 234, 131, 0.4);
 }
 
 .register-btn:active:not(:disabled) {
@@ -205,7 +205,7 @@ html, body {
   width: 100%;
   background: transparent;
   border: none;
-  color: #667eea;
+  color: #067b29;
   cursor: pointer;
   text-decoration: underline;
   font-size: 15px;
@@ -217,14 +217,14 @@ html, body {
 }
 
 .login-btn:hover {
-  color: #764ba2;
+  color: #07630a;
   text-decoration: none;
 }
 
 /* Focus styles for accessibility */
 .register-card input:focus-visible,
 .custom-select:focus-visible {
-  outline: 2px solid #667eea;
+  outline: 2px solid #04703a;
   outline-offset: 2px;
 }
 
