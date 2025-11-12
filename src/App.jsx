@@ -1,12 +1,14 @@
-// src/App.jsx
+// src/App.jsx - UPDATED
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./component/login/login";
 import Register from "./component/registration/registration";
-import AdminDashboard from "./component/dashboard/AdminDashboard"; // Fixed import path
+import AdminDashboard from "./component/dashboard/AdminDashboard";
 import AgentDashboard from "./component/dashboard/AgentDashboard";
 import ForgotPassword from "./component/forgotpassword/forgotpassword";
 import UserDashboard from "./component/dashboard/UserDashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css"; // ADD THIS
+import Home from "./component/Home/Home";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -17,7 +19,9 @@ function App() {
   return (
     <Routes>
       {/* Public routes */}
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Home />} /> {/* CHANGED FROM LOGIN TO HOME */}
+      <Route path="/home" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
 
@@ -27,7 +31,7 @@ function App() {
         element={
           isAuthenticated && role === "admin" ? 
             <AdminDashboard /> : 
-            <Navigate to="/" />
+            <Navigate to="/login" />
         }
       />
       
@@ -36,7 +40,7 @@ function App() {
         element={
           isAuthenticated && role === "user" ? 
             <UserDashboard /> : 
-            <Navigate to="/" />
+            <Navigate to="/login" />
         }
       />
       
@@ -45,7 +49,7 @@ function App() {
         element={
           isAuthenticated && role === "insurance agent" ?
             <AgentDashboard /> : 
-            <Navigate to="/" />
+            <Navigate to="/login" />
         }
       />
 
